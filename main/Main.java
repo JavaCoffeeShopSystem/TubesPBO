@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +21,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.WindowConstants;
 
 /**
@@ -32,28 +36,27 @@ public class Main extends JFrame{
      */
     
     public Main(){
-        initComponent();
+        initial();
     }
     
     
     
-    public void initComponent(){
+    public void initial(){
         // supaya lebih mudah mengganti ukuran 
         int widthF = 1400, heighF = 900;
         int jarakx = 25, jaraky = 300, width = 300, height = 300; //jarak adalah jarak vertikal antar button
         int listX = 1000,listY=0, listW=400,listH=900; //ukuran dan koordinat panel list 
 
-        ImageIcon img = new ImageIcon("img/coffee.png");
         
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         
         setSize(widthF,heighF);
         setLocationRelativeTo(null);
-        setIconImage(img.getImage());
+        
         getContentPane().setBackground(Color.yellow);
         setTitle("System");
         
-        getContentPane().setLayout(null);
+//        getContentPane().setLayout(null);
 
         lblCat = new JLabel("CATEGORY");
         lblCat.setBounds(360,75,280,50);
@@ -79,13 +82,6 @@ public class Main extends JFrame{
         btnNkopi.setBackground(Color.red);
         add(btnNkopi);
         
-        //panel list pesan
-        pnlListPesan = new JPanel();
-        pnlListPesan.setBounds(listX,listY,listW,listH);
-        pnlListPesan.setBackground(Color.orange);
-//        pnlListPesan.setLayout(null);
-//        add(pnlListPesan);
-        
         //label list pesan
         lblListPesan = new JLabel("List Pesan");
         lblListPesan.setBounds(1100, 40, 200,50);
@@ -98,11 +94,11 @@ public class Main extends JFrame{
         btnOrder.setBackground(Color.green);
         add(btnOrder);
         
-        //btn order
-        btnOrder = new JButton("Delete");
-        btnOrder.setBounds(1050,780,150,75);
-        btnOrder.setBackground(Color.green);
-        add(btnOrder);
+        //btn delete order
+        btnDelete = new JButton("Delete");
+        btnDelete.setBounds(1050,780,150,75);
+        btnDelete.setBackground(Color.green);
+        add(btnDelete);
         
         //lbl nama pada list pesanan
         lblNama = new JLabel("Nama");
@@ -124,12 +120,41 @@ public class Main extends JFrame{
         
         //lbl cb pada list pesanan
         lblCb = new JLabel("CB");
-        lblCb.setBounds(1300, 85, 200,50);
+        lblCb.setBounds(1250, 85, 200,50);
         lblCb.setFont(new Font("Arial",Font.PLAIN,30));
         add(lblCb);
         
+//        //panel list pesan
+//        pnlListPesan = new JPanel();
+//        pnlListPesan.setBounds(listX,listY,listW,listH);
+//        pnlListPesan.setBackground(Color.orange);
+////        pnlListPe san.setLayout(null);
+//        add(pnlListPesan);
         
+        //table
+//        String data[][] = {
+//            {"ayam","jagung"},
+//            {"burung","cacing"}
+//        };
+//        
+//        String judul[] = {"nama","makanan"};
+//        
+//        table = new JTable(data,judul);
+//        table.setPreferredSize(new Dimension(50,50));
+//        
+//        jsp = new JScrollPane(table);
+//        pnlListPesan.add(jsp);
+
+        //action listener
+        btnMakanan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                new SubCat();
+                setVisible(false);
+            }
+        });
     }
+    
     
     
     
@@ -142,10 +167,14 @@ public class Main extends JFrame{
     JButton btnKopi;
     JButton btnNkopi;
     JButton btnOrder;
+    JButton btnDelete;
       
     JPanel pnlListPesan;
     
 //    JCheckBox as;
+    
+    JScrollPane jsp;
+    JTable table;
             
     JLabel lblCat;
     JLabel lblListPesan;
