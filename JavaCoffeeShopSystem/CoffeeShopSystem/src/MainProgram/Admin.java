@@ -29,6 +29,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -38,7 +39,7 @@ public class Admin extends JFrame {
 
     public Admin() {
         initComponent();
-        //setupAction();
+        setUpAction();
     }
 
     private Image resizeImage(int x, int y, String url) {
@@ -56,22 +57,23 @@ public class Admin extends JFrame {
         ImageIcon img = new ImageIcon("img/admin.png");
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(500, 300);
+        setSize(700, 300);
         setIconImage(img.getImage());
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.GRAY);
         setTitle("Admin");
-
+        
         //Split Pane Admin Menu
         JSplitPane jspPn = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, setPnlStock(), setPnlMenu());
         jspPn.setContinuousLayout(true);
         jspPn.setOneTouchExpandable(true);
-        jspPn.setDividerLocation(500);
+        jspPn.setDividerLocation(700);
 
         jspPn.setDividerSize(13);
         getContentPane().add(jspPn);
     }
 
+    
     private JPanel setPnlStock() {
         //Panel 1
         jpPan1 = new JPanel();
@@ -80,40 +82,63 @@ public class Admin extends JFrame {
         //Input item name
         jlbItem = new JLabel("Item name");
         jlbItem.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        jlbItem.setBounds(8, 5, 100, 35);
+        jlbItem.setBounds(8, 20, 100, 35);
 
         jtfItem = new JTextField();
-        jtfItem.setBounds(110, 7, 200, 30);
+        jtfItem.setBounds(110, 22, 200, 30);
 
         //Input Quantity item
         jlbQua = new JLabel("Quantity");
         jlbQua.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        jlbQua.setBounds(20, 20, 100, 75);
+        jlbQua.setBounds(20, 35, 100, 75);
 
         jtfQua = new JTextField("0");
-        jtfQua.setBounds(110, 48, 50, 30);
+        jtfQua.setBounds(110, 61, 50, 30);
 
         //Add item name and quantity
         jbAdd = new JButton("Add");
-        jbAdd.setBounds(110, 90, 100, 30);
+        jbAdd.setBounds(110, 110, 100, 30);
         jbAdd.setBackground(Color.DARK_GRAY);
         jbAdd.setForeground(Color.WHITE);
 
         //See added item list
         jbStock = new JButton("Stock");
-        jbStock.setBounds(110, 130, 100, 30);
+        jbStock.setBounds(110, 150, 100, 30);
         jbStock.setBackground(Color.LIGHT_GRAY);
-
+        
+        
+        
+        //Test Stock Panel
+        String[] colname1 = {"No.", "Item", "Quantity", "Date"};
+        String[][] data1 = {{"1", "Java Bean", "20"},
+        {"2", "Toraja Bean", "15"},
+        {"3", "Papua Bean", "15"},
+        {"3", "Papua Bean", "15"},
+        {"3", "Papua Bean", "15"},
+        {"3", "Papua Bean", "15"},
+        {"3", "Papua Bean", "15"},
+        {"3", "Papua Bean", "15"},
+        {"3", "Papua Bean", "15"}
+        };
+        
+        JTable jtb = new JTable();
+        DefaultTableModel dtm = new DefaultTableModel(data1, colname1);
+        jtb.setModel(dtm);
+        JScrollPane jsp = new JScrollPane(jtb);
+        jsp.setBounds(350, 10, 300, 130);
+        
+        
         jpPan1.add(jlbItem);
         jpPan1.add(jtfItem);
         jpPan1.add(jlbQua);
         jpPan1.add(jtfQua);
         jpPan1.add(jbAdd);
         jpPan1.add(jbStock);
-
+        jpPan1.add(jsp);
         return jpPan1;
     }
 
+    
     private JPanel setPnlMenu() {
         jpPan2 = new JPanel();
 
@@ -158,7 +183,7 @@ public class Admin extends JFrame {
         //Show All menu
         jbShowMenu = new JButton("Menu");
         jbShowMenu.setBounds(200, 155, 70, 30);
-
+        
         jpPan2.add(jbAdd2);
         jpPan2.add(jbShowMenu);
         jpPan2.add(jlbFood);
@@ -342,10 +367,11 @@ public class Admin extends JFrame {
         new Admin().setVisible(true);
 
     }
+    
     JPanel jpPan1;
     JPanel jpPan2;
 
-    //Panel 1 component
+    //Stock component
     JButton jbAdd;
     JButton jbStock;
 
@@ -361,7 +387,7 @@ public class Admin extends JFrame {
     JTabbedPane jtpPn;
     JSplitPane jspPn;
 
-    //Panel 2 component
+    //Menu component
     JButton jbAdd2;
     JButton jbShowMenu;
 
