@@ -8,14 +8,14 @@ package DatabaseConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+import MainProgram.SubCat;
 /**
  *
  * @author Andre Darsono
  */
 public class ConncectionManager {
 
-    private static String server = "jdbc:mysql://localhost/CoffeeShopSystem_db";
+    private static String server = "jdbc:mysql://localhost/coffee_shop";
     private static String username = "root";
     private static String password = "";
     private static Connection connection;
