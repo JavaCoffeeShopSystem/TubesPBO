@@ -95,6 +95,10 @@ public class SubCat extends JFrame {
                 System.out.println(nama);
                 
                 int x = jarakx + ((jarakx+ widthB)*(i-1));
+                if (i == 5) {
+                    i=-4;
+                    jaraky=+ jaraky;
+                }
                 System.out.println(i);
                 add(new Makanan(x, jaraky,widthB, heightB, nama ,url)).addMouseListener(new MouseListener() {
                 
@@ -127,10 +131,6 @@ public class SubCat extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace(System.err);
         }
-        
-        
-        
-                
         
         //label list pesan
         lblListPesan = new JLabel("List Pesan");
@@ -192,6 +192,8 @@ public class SubCat extends JFrame {
                 setVisible(false);
             }
         });
+        
+        
         
     }
 

@@ -136,8 +136,8 @@ public class Main extends JFrame{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 categori = "makanan";
-                add(new SubCat());
-               
+                new SubCat();
+                setVisible(false);
             }
         });
         
