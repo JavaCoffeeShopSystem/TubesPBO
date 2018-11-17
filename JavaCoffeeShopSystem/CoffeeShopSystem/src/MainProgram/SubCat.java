@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
-import DatabaseConnection.ConncectionManager;
+import DatabaseConnection.ConnectionManager;
 
 /**
  *
@@ -57,7 +57,7 @@ public class SubCat extends JFrame {
         lblMenu.setFont(new Font("Arial",Font.PLAIN,50));
         add(lblMenu);
         
-        Connection con = new ConncectionManager().getConnection();
+        Connection con = new ConnectionManager().getConnection();
         
         try {
             String categori = new Main().categori;
