@@ -40,6 +40,7 @@ public class Main extends JFrame{
     }
     
     public static String subCat;
+    public static String categori;
     public void initial(){
         // supaya lebih mudah mengganti ukuran 
         int widthF = 1400, heighF = 900; //ukuran frame
@@ -134,7 +135,7 @@ public class Main extends JFrame{
         btnMakanan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                subCat = "MAKANAN";
+                categori = "makanan";
                 new SubCat();
                 setVisible(false);
             }
@@ -144,7 +145,8 @@ public class Main extends JFrame{
          btnKopi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                subCat = "KOPI";
+                categori = "minuman";
+                subCat = "kopi";
                 new SubCat();
                 setVisible(false);
             }
@@ -154,10 +156,10 @@ public class Main extends JFrame{
          btnNkopi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                subCat = "NON-KOPI";
+                categori = "minuman";
+                subCat = "non-kopi";
                 new SubCat();
                 setVisible(false);
-                
             }
         });
     }
@@ -187,13 +189,14 @@ public class Main extends JFrame{
     JButton btnNkopi;
     JButton btnOrder;
     JButton btnDelete;
+    JButton btnBack;
       
     JPanel pnlListPesan;
     
 //    JCheckBox as;
     
     JScrollPane jsp;
-    JTable table;
+
             
     JLabel lblCat;
     JLabel lblListPesan;

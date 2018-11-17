@@ -52,17 +52,27 @@ public class SubCat extends JFrame {
         
         setLayout(null);
         
-        lblMenu = new JLabel(new Main().subCat);
+        lblMenu = new JLabel(new Main().categori);
         lblMenu.setBounds(360,25,280,50);
         lblMenu.setFont(new Font("Arial",Font.PLAIN,50));
         add(lblMenu);
         
         Connection con = new ConnectionManager().getConnection();
         
-        
         try {
-            String sMenu = "SELECT nama,harga,url FROM menu";
+            String categori = new Main().categori;
+            String subCat = new Main().subCat;
+            String sMenu;
             Statement smt = con.createStatement();
+            
+            if (categori == "makanan") {
+                sMenu= "SELECT m.nama,m.harga,m.url FROM menu m inner join " + categori +" c on (m.id_menu = c.id_menu) ";
+            }else{
+                 sMenu= "SELECT m.nama,m.harga,m.url "
+                         + "FROM menu m inner join " + categori +" c on (m.id_menu = c.id_menu) where c.category = '"+ subCat + "'";
+                 
+            }
+            
             ResultSet rs = smt.executeQuery(sMenu);
             
             //cek brp banyak record di temuakan
@@ -77,13 +87,20 @@ public class SubCat extends JFrame {
             //geser ke posisi before of resoult
             rs.beforeFirst();
             
+            int i =1 ;
             while(rs.next()) {
-                int i =1 ;
+                
                 String nama = rs.getString(1);
                 String url = rs.getString(3);
                 System.out.println(nama);
-                                
-                add(new Makanan(jarakx + ((jarakx+ widthB)*(i-1)), jaraky,widthB, heightB, nama ,url)).addMouseListener(new MouseListener() {
+                
+                int x = jarakx + ((jarakx+ widthB)*(i-1));
+                if (i == 5) {
+                    i=-4;
+                    jaraky=+ jaraky;
+                }
+                System.out.println(i);
+                add(new Makanan(x, jaraky,widthB, heightB, nama ,url)).addMouseListener(new MouseListener() {
                 
                     @Override
                     public void mouseClicked(MouseEvent me) {
@@ -114,10 +131,6 @@ public class SubCat extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace(System.err);
         }
-        
-        
-        
-                
         
         //label list pesan
         lblListPesan = new JLabel("List Pesan");
@@ -164,33 +177,35 @@ public class SubCat extends JFrame {
         pnlListPesan = new JPanel();
         pnlListPesan.setBounds(listX,listY,listW,listH);
         pnlListPesan.setBackground(Color.orange);
-        add(pnlListPesan);        
-   
-    }
-    
-    
-    public static void main(String[] args) {
+        add(pnlListPesan);     
         
-        new SubCat().setVisible(true);
+        btnBack = new JButton("Back");
+        btnBack.setBounds(0,780,150,75);
+        btnBack.setBackground(Color.green);
+        add(btnBack);
+   
+        //action listener btnBack
+        btnBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                new Main().setVisible(true);
+                setVisible(false);
+            }
+        });
+        
         
         
     }
 
-    
-    JButton btnRoti1;
-    JButton btnRoti2;
     JButton btnOrder;
     JButton btnDelete;
+    JButton btnBack;
       
     JPanel pnlListPesan;
     JPanel pnl1;
     
 //    JCheckBox as;
-    
-    JTable tblList;
-    
-    JScrollPane jspList;
-    
+
     JLabel lblMenu;
     JLabel lblListPesan;
     JLabel lblNama;
