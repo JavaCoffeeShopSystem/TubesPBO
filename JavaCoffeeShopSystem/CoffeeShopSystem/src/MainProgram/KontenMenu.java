@@ -20,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import MainProgram.Main;
+import static MainProgram.Main.categori;
+import static MainProgram.Main.subCat;
 /**
  *
  * @author Panorama121
@@ -64,7 +66,7 @@ public class KontenMenu extends JPanel{
         btnMakanan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                new Main().subCat = "MAKANAN";
+                categori = "makanan";
                 new SubCat();
                 setVisible(false);
             }
@@ -74,7 +76,8 @@ public class KontenMenu extends JPanel{
          btnKopi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                new Main().subCat = "KOPI";
+                categori = "minuman";
+                subCat = "kopi";
                 new SubCat();
                 setVisible(false);
             }
@@ -84,10 +87,10 @@ public class KontenMenu extends JPanel{
          btnNkopi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                new Main().subCat = "NON-KOPI";
+                categori = "minuman";
+                subCat = "non-kopi";
                 new SubCat();
                 setVisible(false);
-                
             }
         });
         
