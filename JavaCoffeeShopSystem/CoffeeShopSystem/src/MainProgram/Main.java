@@ -46,6 +46,8 @@ public class Main extends JFrame{
     
     public void initial(){
         
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
         setSize(1400,900);
         setLayout(new BorderLayout());
         
@@ -55,16 +57,12 @@ public class Main extends JFrame{
         pnlKonten.setLayout(new CardLayout());
         pnlKonten.add(new KontenMenu());
         
-        pnlList.setLayout(new CardLayout());
+        pnlList.setLayout(new BorderLayout());
         pnlList.add(new List());
         
         getContentPane().add(pnlKonten,BorderLayout.CENTER);
         getContentPane().add(pnlList,BorderLayout.EAST);
     }
-    
-    
-    
-    
     
     public static void main(String[] args) {
         new Main().setVisible(true);

@@ -146,8 +146,6 @@ public class ManageMenu extends JPanel {
 
     }   
 
-
-    //Menu component
     JButton jbAdd2;
     JButton jbShowMenu;
 

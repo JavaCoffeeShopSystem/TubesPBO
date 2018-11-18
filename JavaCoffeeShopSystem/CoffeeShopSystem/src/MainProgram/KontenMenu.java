@@ -5,6 +5,7 @@
  */
 package MainProgram;
 
+import DatabaseConnection.ConnectionManager;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -20,66 +21,91 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import MainProgram.Main;
-import static MainProgram.Main.categori;
-import static MainProgram.Main.subCat;
+import java.awt.CardLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 /**
  *
  * @author Panorama121
  */
 public class KontenMenu extends JPanel{
     
+    SubCat sc;
+    
     public KontenMenu(){
         init();
     }
     
     private void init(){
+        
+        
+        CardLayout cl = new CardLayout();
+        pnlCard = new JPanel();
+        pnlKategori = new JPanel();
+        pnlSubKategori = new JPanel();
+        
         int widthF = 1400, heighF = 900; //ukuran frame
         int jarakx = 25, jaraky = 300, width = 300, height = 300; //jarak adalah jarak vertikal antar button
+        int widthB = 218, heightB = 218; //jarak adalah jarak vertikal antar button di pnlSubKategori
         int listX = 1000,listY=0, listW=400,listH=900; //ukuran dan koordinat panel list
+
+        setLayout(cl);
         
-        setLayout(null);
+        pnlKategori.setLayout(null);
+        add(pnlKategori,"kat");
+        cl.show(this, "kat");
+        
         //set lebel
         lblCat = new JLabel("CATEGORY");
         lblCat.setBounds(360,75,280,50);
         lblCat.setFont(new Font("Arial",Font.PLAIN,50));
-        add(lblCat);
+        pnlKategori.add(lblCat);
 
         //btn Makanan
         btnMakanan = new JButton("asd", new ImageIcon(resizeImage("img\\food-icon.png", width,height)));
         btnMakanan.setBounds(jarakx, jaraky, width, height);
         btnMakanan.setBackground(Color.RED);
-        add(btnMakanan);
+        pnlKategori.add(btnMakanan);
         
         //btn Kopi
         btnKopi = new JButton(new ImageIcon(resizeImage("img\\coffee-flat.png", width, height)));
         btnKopi.setBounds((width+(jarakx*2)), jaraky, width, height);
         btnKopi.setBackground(Color.red);
-        add(btnKopi);
+        pnlKategori.add(btnKopi);
         
          //btn non-Kopi
         btnNkopi = new JButton(new ImageIcon(resizeImage("img\\non-coffee.png", width, height)));
         btnNkopi.setBounds(((width*2)+(jarakx*3)), jaraky, width, height);
         btnNkopi.setBackground(Color.red);
-        add(btnNkopi);
+        pnlKategori.add(btnNkopi);
+        
+        btnBack = new JButton("Back");
+        btnBack.setBounds(0,780,150,75);
+        btnBack.setBackground(Color.green);
+        add(btnBack);
+   
+        
         
         //action listener btnMakanan
+        
         btnMakanan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                categori = "makanan";
-                new SubCat();
-                setVisible(false);
+                actionBtnMakan();                
             }
+            
         });
+        
         
         //action listener btnKopi
          btnKopi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                categori = "minuman";
-                subCat = "kopi";
-                new SubCat();
-                setVisible(false);
+                actionBtnKopi();
             }
         });
          
@@ -87,12 +113,56 @@ public class KontenMenu extends JPanel{
          btnNkopi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                categori = "minuman";
-                subCat = "non-kopi";
-                new SubCat();
-                setVisible(false);
+                actionBtnNKopi();
             }
         });
+         
+         //action listener btnBack
+        btnBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                actionBtnBack();
+            }
+        });
+      
+        
+    }
+    
+    private void actionBtnMakan(){
+        CardLayout cl  = (CardLayout) this.getLayout(); ;
+        if (sc == null) {
+            sc = new SubCat("makanan","");
+            this.add(sc,"sc");
+            cl.addLayoutComponent(sc, "sc");
+            
+        }
+        
+        cl.show(this, "sc");
+    }
+    
+    private void actionBtnKopi(){
+        CardLayout cl  = (CardLayout) this.getLayout(); ;
+        if (sc == null) {
+            sc = new SubCat("minuman","kopi");
+            this.add(sc,"sc");
+            cl.addLayoutComponent(sc, "sc");
+        }
+        
+        cl.show(this, "sc");
+    }
+    
+    private void actionBtnNKopi(){
+        CardLayout cl  = (CardLayout) this.getLayout(); ;
+        if (sc == null) {
+            sc = new SubCat("minuman","non-kopi");
+            this.add(sc,"sc");
+            cl.addLayoutComponent(sc, "sc");
+        }
+        
+        cl.show(this, "sc");
+    }
+    
+    private void actionBtnBack(){
         
     }
     
@@ -112,21 +182,15 @@ public class KontenMenu extends JPanel{
     JButton btnMakanan;
     JButton btnKopi;
     JButton btnNkopi;
-    JButton btnOrder;
-    JButton btnDelete;
+    JButton btnBack;
       
-    JPanel pnlListPesan;
-    JPanel pnlKonten;
+    JPanel pnlKategori;
+    JPanel pnlSubKategori;
+    JPanel pnlCard;
+    
     
 //    JCheckBox as;
-    
-    JScrollPane jsp;
-    JTable table;
-            
+
     JLabel lblCat;
-    JLabel lblListPesan;
-    JLabel lblNama;
-    JLabel lblHarga;
-    JLabel lblQty;
-    JLabel lblCb;
+    JLabel lblMenu;
 }
