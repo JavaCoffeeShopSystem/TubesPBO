@@ -45,6 +45,7 @@ public class DataAccess {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Item i = new Item();
+                i.setId(rs.getInt("id_barang"));
                 i.setName(rs.getString("nama"));
                 i.setQua(rs.getInt("jml"));
                 i.setUnit(rs.getString("satuan"));
