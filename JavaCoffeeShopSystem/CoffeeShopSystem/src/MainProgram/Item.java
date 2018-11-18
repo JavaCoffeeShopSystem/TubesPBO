@@ -10,11 +10,34 @@ package MainProgram;
  * @author Ronaldo
  */
 public class Item {
-  
+    
     private String name;
-    private int price;
+    private String unit;
+    private int id;
     private int qua;
+    private int price;
+    
+    public Item(){
         
+    }
+    
+    public Item(String name, int qua, String unit, int price) {
+        this.name = name;
+        this.qua = qua;
+        this.unit = unit;
+        this.price = price;
+        
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
     public String getName() {
         return name;
     }
@@ -22,7 +45,7 @@ public class Item {
     public void setName(String name) {
         this.name = name;
     }
-
+    
     public int getPrice() {
         return price;
     }
@@ -31,6 +54,14 @@ public class Item {
         this.price = price;
     }
 
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+    
     public int getQua() {
         return qua;
     }
@@ -38,11 +69,10 @@ public class Item {
     public void setQua(int qua) {
         this.qua = qua;
     }
-
-
-    @Override
-    public String toString(){
-        return name + " " + price + " " + qua;
-    }
     
+    @Override
+    public String toString() {
+        return name + " " + price +" " + unit + " " + qua;
+    }
+
 }
