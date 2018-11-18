@@ -94,11 +94,11 @@ public class SubCat extends JFrame {
                 String url = rs.getString(3);
                 System.out.println(nama);
                 
-                int x = jarakx + ((jarakx+ widthB)*(i-1));
                 if (i == 5) {
-                    i=-4;
-                    jaraky=+ jaraky;
+                    i-=4;
+                    jaraky+= (50 + heightB);
                 }
+                int x = jarakx + ((jarakx+ widthB)*(i-1));
                 System.out.println(i);
                 add(new Makanan(x, jaraky,widthB, heightB, nama ,url)).addMouseListener(new MouseListener() {
                 
