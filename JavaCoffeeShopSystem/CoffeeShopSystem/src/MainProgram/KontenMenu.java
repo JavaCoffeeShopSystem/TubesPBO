@@ -35,6 +35,7 @@ import java.sql.Statement;
 public class KontenMenu extends JPanel{
     
     SubCat sc;
+    CardLayout cl = new CardLayout();
     
     public KontenMenu(){
         init();
@@ -42,8 +43,6 @@ public class KontenMenu extends JPanel{
     
     private void init(){
         
-        
-        CardLayout cl = new CardLayout();
         pnlCard = new JPanel();
         pnlKategori = new JPanel();
         pnlSubKategori = new JPanel();
@@ -82,11 +81,6 @@ public class KontenMenu extends JPanel{
         btnNkopi.setBounds(((width*2)+(jarakx*3)), jaraky, width, height);
         btnNkopi.setBackground(Color.red);
         pnlKategori.add(btnNkopi);
-        
-        btnBack = new JButton("Back");
-        btnBack.setBounds(0,780,150,75);
-        btnBack.setBackground(Color.green);
-        add(btnBack);
    
         
         
@@ -115,21 +109,11 @@ public class KontenMenu extends JPanel{
             public void actionPerformed(ActionEvent ae) {
                 actionBtnNKopi();
             }
-        });
-         
-         //action listener btnBack
-        btnBack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                actionBtnBack();
-            }
-        });
-      
+        });     
         
     }
     
     private void actionBtnMakan(){
-        CardLayout cl  = (CardLayout) this.getLayout(); ;
         if (sc == null) {
             sc = new SubCat("makanan","");
             this.add(sc,"sc");
@@ -141,7 +125,6 @@ public class KontenMenu extends JPanel{
     }
     
     private void actionBtnKopi(){
-        CardLayout cl  = (CardLayout) this.getLayout(); ;
         if (sc == null) {
             sc = new SubCat("minuman","kopi");
             this.add(sc,"sc");
@@ -152,7 +135,6 @@ public class KontenMenu extends JPanel{
     }
     
     private void actionBtnNKopi(){
-        CardLayout cl  = (CardLayout) this.getLayout(); ;
         if (sc == null) {
             sc = new SubCat("minuman","non-kopi");
             this.add(sc,"sc");
@@ -160,10 +142,6 @@ public class KontenMenu extends JPanel{
         }
         
         cl.show(this, "sc");
-    }
-    
-    private void actionBtnBack(){
-        
     }
     
     private Image resizeImage(String url, int w, int h){

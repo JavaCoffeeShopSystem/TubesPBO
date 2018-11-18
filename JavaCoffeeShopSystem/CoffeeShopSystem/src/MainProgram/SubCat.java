@@ -38,7 +38,7 @@ public class SubCat extends JPanel {
     }
     
     public void initial(String k, String sk){
-        CardLayout cl = new CardLayout();
+        
         pnlNull = new JPanel();
         // supaya lebih mudah mengganti ukuran 
         int widthF = 1400, heighF = 900;
@@ -47,11 +47,11 @@ public class SubCat extends JPanel {
 
         setSize(widthF,heighF);
         
-        setLayout(cl);
+        setLayout(new CardLayout());
         
         pnlNull.setLayout(null);
         add(pnlNull,"sc");
-        cl.show(this, "sc");
+        new KontenMenu().cl.addLayoutComponent(new KontenMenu(), "sc");
         
         lblMenu = new JLabel(k);
         lblMenu.setBounds(360,25,280,50);
@@ -106,7 +106,7 @@ public class SubCat extends JPanel {
                 
                     @Override
                     public void mouseClicked(MouseEvent me) {
-                        actionMenu(url);
+                        actionMenu(url,k,sk);
                     }
 
                     @Override
@@ -144,22 +144,28 @@ public class SubCat extends JPanel {
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                new Main().setVisible(true);
-                new Main().setVisible(false);
+                actionBtnBack();
             }
         });
         
-        
-        
     }
     
-    private void actionMenu(String url){
+    private void actionMenu(String url, String s, String sk){
         CardLayout cl  = (CardLayout) this.getLayout(); ;
-        Menu m = new Menu(url);
+        Menu m = new Menu(url,s,sk);
         this.add(m,"m");
         cl.addLayoutComponent(m, "m");
         
         cl.show(this, "m");
+    }
+    
+    private void actionBtnBack(){
+        CardLayout cl  = (CardLayout) this.getLayout(); ;
+        KontenMenu km = new KontenMenu();
+        this.add(km,"km");
+        cl.addLayoutComponent(km, "km");
+        
+        cl.show(this, "km");
     }
     
     

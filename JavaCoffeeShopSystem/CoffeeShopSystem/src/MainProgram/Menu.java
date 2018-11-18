@@ -6,11 +6,14 @@
 package MainProgram;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,38 +27,72 @@ import javax.swing.JTextField;
  */
 public class Menu extends JPanel{
 
-    public Menu(String url){
-        init(url);
+    public Menu(String url,String k, String sk){
+        init(url,k,sk);
         
     }
     
-    private void init(String url){
-        setLayout(new BorderLayout());
+    private void init(String url,String k, String sk){
+        setLayout(new CardLayout());
+        
+        pnlMain = new JPanel();
+        pnlMain.setLayout(new BorderLayout());
+        add(pnlMain);
         
         lblGambar = new JLabel(new ImageIcon(url));
-        lblGambar.setBounds(250,250,500,500);
-        add(lblGambar,BorderLayout.CENTER);
+        pnlMain.add(lblGambar,BorderLayout.CENTER);
         
         pnlBorderS = new JPanel();
-        pnlBorderS.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 50));
+        pnlBorderS.setLayout(new BorderLayout());
+        
+        pnlBorderW = new JPanel();
+        pnlBorderW.setLayout(new FlowLayout());
+        btnBack = new JButton("Back");
+        btnBack.setPreferredSize(new Dimension(80,50));
+        pnlBorderW.add(btnBack);
+        pnlBorderS.add(pnlBorderW,BorderLayout.WEST);
+        
+        pnlBorderC = new JPanel();
+        pnlBorderC.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 10));
         txtJml = new JTextField(2);
         txtJml.setFont(new Font("Arial", Font.PLAIN, 30));
         txtJml.setHorizontalAlignment(JTextField.CENTER);
-        pnlBorderS.add(txtJml);
+        pnlBorderC.add(txtJml);
         
         btnOK = new JButton("OK");
         btnOK.setPreferredSize(new Dimension(55,55));
-        pnlBorderS.add(btnOK);
-        add(pnlBorderS,BorderLayout.SOUTH);
+        pnlBorderC.add(btnOK);
+        pnlBorderS.add(pnlBorderC,BorderLayout.CENTER);
+        
+        pnlMain.add(pnlBorderS,BorderLayout.SOUTH);
+        
+        
+        
+        //action listener btnBack
+        btnBack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                actionBtnBack(k,sk);
+            }
+        });
         
     }
     
-    public static void main(String[] args) {
-        new Menu("d").setVisible(true);
+    private void actionBtnBack(String k, String sk){
+        CardLayout cl  = (CardLayout) this.getLayout(); ;
+        SubCat sc = new SubCat(k,sk);
+        this.add(sc,"sc");
+        cl.addLayoutComponent(sc, "sc");
+        
+        cl.show(this, "sc");
     }
     
     JButton btnOK;
     JTextField txtJml;
     JLabel lblGambar;
+    JPanel pnlMain;
     JPanel pnlBorderS;
+    JPanel pnlBorderW;
+    JPanel pnlBorderC;
+    JButton btnBack;
 }
