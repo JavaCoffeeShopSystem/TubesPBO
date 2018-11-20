@@ -35,7 +35,7 @@ public class Main extends JFrame{
     
     public void initial(){
         List list = new ArrayList();
-       
+        lm = new ListMenu("v","v","v","v");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         setSize(1500,900);
@@ -49,7 +49,7 @@ public class Main extends JFrame{
         pnlKonten.add(new KontenMenu());
         
         pnlList.setLayout(new BorderLayout());
-        pnlList.add(new ListMenu("","","",""));
+        pnlList.add(lm);
         
         getContentPane().add(pnlKonten,BorderLayout.CENTER);
         getContentPane().add(pnlList,BorderLayout.EAST);
@@ -62,6 +62,7 @@ public class Main extends JFrame{
 
     JPanel pnlKonten;
     JPanel pnlList;
+    public ListMenu lm;
     
     
     

@@ -33,9 +33,12 @@ import java.awt.CardLayout;
 public class SubCat extends JPanel {
     
     public SubCat(String kategori, String subKategori){
-        setVisible(true);
         initial(kategori, subKategori);
     }
+    
+    String nama;
+    String harga;
+    String url;
     
     public void initial(String k, String sk){
         
@@ -73,7 +76,6 @@ public class SubCat extends JPanel {
                          + "FROM menu m inner join " + categori +" c on (m.id_menu = c.id_menu) where c.category = '"+ subCat + "'";
                  
             }
-            System.out.println(sMenu);
             
             ResultSet rs = smt.executeQuery(sMenu);
             
@@ -83,8 +85,6 @@ public class SubCat extends JPanel {
                 rowFound = rs.getRow();
             }
             
-            System.out.println("jumlah row: " + rowFound);
-            System.out.println("");
             
             //geser ke posisi before of resoult
             rs.beforeFirst();
@@ -92,16 +92,15 @@ public class SubCat extends JPanel {
             int i =1 ;
             while(rs.next()) {
                 
-                String nama = rs.getString(1);
-                String url = rs.getString(3);
-                System.out.println(nama);
+                this.nama = rs.getString(1);
+                this.harga = rs.getString(2);
+                this.url = rs.getString(3);
                 
                 if (i == 5) {
                     i-=4;
                     jaraky+= (50 + heightB);
                 }
                 int x = jarakx + ((jarakx+ widthB)*(i-1));
-                System.out.println(i);
                 pnlNull.add(new Makanan(x, jaraky,widthB, heightB, nama ,url)).addMouseListener(new MouseListener() {
                 
                     @Override
@@ -152,7 +151,7 @@ public class SubCat extends JPanel {
     
     private void actionMenu(String url, String s, String sk){
         CardLayout cl  = (CardLayout) this.getLayout(); ;
-        Menu m = new Menu(url,s,sk);
+        Menu m = new Menu(url,s,sk,nama,harga);
         this.add(m,"m");
         cl.addLayoutComponent(m, "m");
         

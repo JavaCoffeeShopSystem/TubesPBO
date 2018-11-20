@@ -20,16 +20,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Panorama121
  */
 public class Menu extends JPanel{
-
-    public Menu(String url,String k, String sk){
-        init(url,k,sk);
-        
+    
+    String nama;
+    String harga;
+    String qty;
+    String cb;
+    
+    public Menu(String url,String k, String sk,String nama,String Harga){
+        init(url,k,sk);   
+        this.nama = nama;
+        this.harga = harga;
     }
     
     private void init(String url,String k, String sk){
@@ -57,13 +65,15 @@ public class Menu extends JPanel{
         txtJml = new JTextField(2);
         txtJml.setFont(new Font("Arial", Font.PLAIN, 30));
         txtJml.setHorizontalAlignment(JTextField.CENTER);
+        this.qty = txtJml.getText();
+        
         pnlBorderC.add(txtJml);
         
         btnOK = new JButton("OK");
         btnOK.setPreferredSize(new Dimension(55,55));
         pnlBorderC.add(btnOK);
         pnlBorderS.add(pnlBorderC,BorderLayout.CENTER);
-        
+        this.cb = "9";
         pnlMain.add(pnlBorderS,BorderLayout.SOUTH);
         
         
@@ -94,6 +104,10 @@ public class Menu extends JPanel{
     }
     
     private void actionBtnOK(){
+        ListMenu lm = new ListMenu("223","sd","sd","d");
+        
+        
+        //ke panel KontenMenu
         CardLayout cl  = (CardLayout) this.getLayout(); ;
         KontenMenu km = new KontenMenu();
         this.add(km,"km");

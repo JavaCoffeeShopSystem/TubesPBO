@@ -15,6 +15,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,60 +25,34 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
  * @author Panorama121
  */
-public class ListMenu extends JPanel {
+public class ListMenu extends JPanel implements Runnable {
+    
     
     
     public ListMenu(String nama, String harga, String qty, String cb){
         init(nama, harga, qty, cb);
     }
     
-    private String nama;
-    private String harga;
-    private String cb;
-    private String qty;
-
-    public String getNama() {
-        return nama;
-    }
-
-    public void setNama(String nama) {
-        this.nama = nama;
-    }
-
-    public String getHarga() {
-        return harga;
-    }
-
-    public void setHarga(String harga) {
-        this.harga = harga;
-    }
-
-    public String getCb() {
-        return cb;
-    }
-
-    public void setCb(String cb) {
-        this.cb = cb;
-    }
-
-    public String getQty() {
-        return qty;
-    }
-
-    public void setQty(String qty) {
-        this.qty = qty;
+    public static ArrayList<String> arr = new ArrayList<String>();
+    
+    public void tambahArr(String s){
+        arr.add(s);
     }
     
-     ArrayList<JComponent> arr = new ArrayList<JComponent>();
-   
+    public String getArr(int a){
+        return arr.get(a);
+    }
+    
     public void init(String nama, String harga, String qty, String cb){
         
-        ArrayList<JComponent> arr = new ArrayList<JComponent>();
+        ArrayList<String> arr = new ArrayList<String>();
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setBackground(Color.WHITE);
         //label list pesan
@@ -126,10 +101,14 @@ public class ListMenu extends JPanel {
         pnlBtn.setLayout(new FlowLayout(FlowLayout.CENTER,30, 0));
         pnlBorder.add(pnlBtn,BorderLayout.PAGE_END);
         
-        String [] judul = {"Nama", "Jumlah", "Haga" , "CB" };
-        String [][] isi = {};
-        tbl = new JTable(isi,judul);
-        tbl.setPreferredSize(new Dimension(200, 200));
+        
+        dtm.addColumn("Nama");
+        dtm.addColumn("Jumlah");
+        dtm.addColumn("Harga");
+        dtm.addColumn("CB");
+        tbl = new JTable(dtm);
+        tbl.setRowHeight(35);
+        tbl.setFont(new Font("Arial", Font.PLAIN, 25));
         
         pnlBorder.add(tbl);
         
@@ -137,9 +116,9 @@ public class ListMenu extends JPanel {
         Dimension d = new Dimension(100,50);
         
         //btn order
-        btnAdd = new JButton("Add");
-        btnAdd.setPreferredSize(d);
-        pnlBtn.add(btnAdd);
+//        btnAdd = new JButton("Add");
+//        btnAdd.setPreferredSize(d);
+//        pnlBtn.add(btnAdd);
         
          //btn delete order
         btnDelete = new JButton("Delete");
@@ -153,33 +132,23 @@ public class ListMenu extends JPanel {
         btnOrder.setPreferredSize(d);
         pnlBtn.add(btnOrder);
         
-        
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println(getArr(i));
+        }
         
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-//                  actionBtnAdd();
-                
-                
+                actionBtnAdd(arr);
             }
         });
     }
     
-//    private void actionBtnAdd(){
-//        arr.add(new LblPesanan(nama));
-//        arr.add(new LblPesanan(qty));
-//        arr.add(new LblPesanan(harga));
-//        arr.add(new LblPesanan(cb));
-//        for (JComponent e : arr) {
-//            pnlGrid.add(e);
-//        }
-//        validate();
-//        repaint();
-//    }
-    
-   
-    
-   
+    private void actionBtnAdd(List <String> list){
+        for (int i = 0; i < list.size(); i++) {
+            dtm.addRow(new Object[]{list.get(i)});
+        }
+    }
    
     JButton btnOrder;
     JButton btnDelete;
@@ -190,14 +159,22 @@ public class ListMenu extends JPanel {
     JPanel pnlBtn;
     JPanel pnlBt;
     
-    JTable tbl;
-    
+    public static JTable tbl;
+    public DefaultTableModel dtm = new DefaultTableModel();
     JLabel lblListPesan;
     JLabel lblNama;
     JLabel lblHarga;
     JLabel lblQty;
     JLabel lblCb;
     JLabel lblTest;
+
+    @Override
+    public void run() {
+        System.out.println("s");
+        validate();
+        repaint();
+        dtm.addRow(new Object[]{"sdf"});
+    }
 
     
 }
