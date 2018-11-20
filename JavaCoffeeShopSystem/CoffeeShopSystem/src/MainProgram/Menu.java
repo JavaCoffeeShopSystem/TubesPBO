@@ -65,7 +65,6 @@ public class Menu extends JPanel{
         pnlBorderS.add(pnlBorderC,BorderLayout.CENTER);
         
         pnlMain.add(pnlBorderS,BorderLayout.SOUTH);
-//        ListMenu = new
         
         
         //action listener btnBack

@@ -22,6 +22,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -77,7 +79,7 @@ public class ListMenu extends JPanel {
         
         ArrayList<JComponent> arr = new ArrayList<JComponent>();
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        
+        setBackground(Color.WHITE);
         //label list pesan
         lblListPesan = new JLabel("List Pesan");
         lblListPesan.setAlignmentX(CENTER_ALIGNMENT);
@@ -92,6 +94,7 @@ public class ListMenu extends JPanel {
         //pnl3
         pnlGrid = new JPanel();
         pnlGrid.setLayout(new GridLayout(0,4,15,0));
+        pnlGrid.setBackground(Color.WHITE);
         pnlBorder.add(pnlGrid,BorderLayout.NORTH);
         
         //lbl nama pada list pesanan
@@ -123,6 +126,13 @@ public class ListMenu extends JPanel {
         pnlBtn.setLayout(new FlowLayout(FlowLayout.CENTER,30, 0));
         pnlBorder.add(pnlBtn,BorderLayout.PAGE_END);
         
+        String [] judul = {"Nama", "Jumlah", "Haga" , "CB" };
+        String [][] isi = {};
+        tbl = new JTable(isi,judul);
+        tbl.setPreferredSize(new Dimension(200, 200));
+        
+        pnlBorder.add(tbl);
+        
         //ukuran btn
         Dimension d = new Dimension(100,50);
         
@@ -148,25 +158,24 @@ public class ListMenu extends JPanel {
         btnAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                  actionBtnAdd();
+//                  actionBtnAdd();
                 
                 
             }
         });
     }
     
-    private void actionBtnAdd(){
-        arr.add(new LblPesanan(nama));
-                    arr.add(new LblPesanan(qty));
-                    arr.add(new LblPesanan(harga));
-                    arr.add(new LblPesanan(cb));
-                    for (JComponent e : arr) {
-                        pnlGrid.add(e);
-                    }
-                    validate();
-                    repaint();
-                    System.out.println("d");
-    }
+//    private void actionBtnAdd(){
+//        arr.add(new LblPesanan(nama));
+//        arr.add(new LblPesanan(qty));
+//        arr.add(new LblPesanan(harga));
+//        arr.add(new LblPesanan(cb));
+//        for (JComponent e : arr) {
+//            pnlGrid.add(e);
+//        }
+//        validate();
+//        repaint();
+//    }
     
    
     
@@ -180,6 +189,8 @@ public class ListMenu extends JPanel {
     JPanel pnlGrid;
     JPanel pnlBtn;
     JPanel pnlBt;
+    
+    JTable tbl;
     
     JLabel lblListPesan;
     JLabel lblNama;
