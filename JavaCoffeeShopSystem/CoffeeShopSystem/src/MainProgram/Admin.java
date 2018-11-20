@@ -42,7 +42,7 @@ public class Admin extends JFrame {
         ImageIcon img = new ImageIcon("img/admin.png");
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(700, 300);
+        setSize(700, 400);
         setIconImage(img.getImage());
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.GRAY);
