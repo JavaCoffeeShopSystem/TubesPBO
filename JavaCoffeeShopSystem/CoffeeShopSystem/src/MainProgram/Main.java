@@ -7,25 +7,14 @@ package MainProgram;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.WindowConstants;
 
 /**
  *
@@ -45,12 +34,14 @@ public class Main extends JFrame{
     public static String categori;
     
     public void initial(){
-        
+        List list = new ArrayList();
+       
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        setSize(1400,900);
+        setSize(1500,900);
         setLayout(new BorderLayout());
         
+//        t.start();
         pnlKonten = new JPanel();
         pnlList = new JPanel();
         
@@ -58,7 +49,7 @@ public class Main extends JFrame{
         pnlKonten.add(new KontenMenu());
         
         pnlList.setLayout(new BorderLayout());
-        pnlList.add(new List());
+        pnlList.add(new ListMenu("","","",""));
         
         getContentPane().add(pnlKonten,BorderLayout.CENTER);
         getContentPane().add(pnlList,BorderLayout.EAST);

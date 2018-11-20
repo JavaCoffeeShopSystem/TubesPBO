@@ -65,7 +65,7 @@ public class Menu extends JPanel{
         pnlBorderS.add(pnlBorderC,BorderLayout.CENTER);
         
         pnlMain.add(pnlBorderS,BorderLayout.SOUTH);
-        
+//        ListMenu = new
         
         
         //action listener btnBack
@@ -73,6 +73,13 @@ public class Menu extends JPanel{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 actionBtnBack(k,sk);
+            }
+        });
+        
+        btnOK.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                actionBtnOK();
             }
         });
         
@@ -85,6 +92,16 @@ public class Menu extends JPanel{
         cl.addLayoutComponent(sc, "sc");
         
         cl.show(this, "sc");
+    }
+    
+    private void actionBtnOK(){
+        CardLayout cl  = (CardLayout) this.getLayout(); ;
+        KontenMenu km = new KontenMenu();
+        this.add(km,"km");
+        cl.addLayoutComponent(km, "km");
+        
+        cl.show(this, "km");
+        
     }
     
     JButton btnOK;

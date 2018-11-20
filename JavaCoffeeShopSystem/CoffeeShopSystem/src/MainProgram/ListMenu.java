@@ -12,8 +12,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -21,12 +27,55 @@ import javax.swing.JPanel;
  *
  * @author Panorama121
  */
-public class List extends JPanel{
-    public List(){
-        init();
+public class ListMenu extends JPanel {
+    
+    
+    public ListMenu(String nama, String harga, String qty, String cb){
+        init(nama, harga, qty, cb);
     }
     
-    public void init(){
+    private String nama;
+    private String harga;
+    private String cb;
+    private String qty;
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public String getHarga() {
+        return harga;
+    }
+
+    public void setHarga(String harga) {
+        this.harga = harga;
+    }
+
+    public String getCb() {
+        return cb;
+    }
+
+    public void setCb(String cb) {
+        this.cb = cb;
+    }
+
+    public String getQty() {
+        return qty;
+    }
+
+    public void setQty(String qty) {
+        this.qty = qty;
+    }
+    
+     ArrayList<JComponent> arr = new ArrayList<JComponent>();
+   
+    public void init(String nama, String harga, String qty, String cb){
+        
+        ArrayList<JComponent> arr = new ArrayList<JComponent>();
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         
         //label list pesan
@@ -69,46 +118,75 @@ public class List extends JPanel{
         lblCb.setFont(new Font("Arial",Font.PLAIN,30));
         pnlGrid.add(lblCb);
         
-        //lblcat
-        lblCat = new JLabel("sdfsd");
-        
         //pnl4
         pnlBtn = new JPanel();
         pnlBtn.setLayout(new FlowLayout(FlowLayout.CENTER,30, 0));
         pnlBorder.add(pnlBtn,BorderLayout.PAGE_END);
         
+        //ukuran btn
+        Dimension d = new Dimension(100,50);
+        
+        //btn order
+        btnAdd = new JButton("Add");
+        btnAdd.setPreferredSize(d);
+        pnlBtn.add(btnAdd);
+        
          //btn delete order
         btnDelete = new JButton("Delete");
-        btnDelete.setPreferredSize(new Dimension(150,75));
+        btnDelete.setPreferredSize(d);
         btnDelete.setBackground(Color.green);
         pnlBtn.add(btnDelete);
         
         //btn order
         btnOrder = new JButton("Order");
         btnOrder.setBackground(Color.green);
-        btnOrder.setPreferredSize(new Dimension(150,75));
+        btnOrder.setPreferredSize(d);
         pnlBtn.add(btnOrder);
         
-       
         
         
-        
+        btnAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                  actionBtnAdd();
+                
+                
+            }
+        });
     }
     
+    private void actionBtnAdd(){
+        arr.add(new LblPesanan(nama));
+                    arr.add(new LblPesanan(qty));
+                    arr.add(new LblPesanan(harga));
+                    arr.add(new LblPesanan(cb));
+                    for (JComponent e : arr) {
+                        pnlGrid.add(e);
+                    }
+                    validate();
+                    repaint();
+                    System.out.println("d");
+    }
     
+   
     
- 
+   
+   
     JButton btnOrder;
     JButton btnDelete;
+    JButton btnAdd;
     
     JPanel pnlBorder;
     JPanel pnlGrid;
     JPanel pnlBtn;
+    JPanel pnlBt;
     
-    JLabel lblCat;
     JLabel lblListPesan;
     JLabel lblNama;
     JLabel lblHarga;
     JLabel lblQty;
     JLabel lblCb;
+    JLabel lblTest;
+
+    
 }

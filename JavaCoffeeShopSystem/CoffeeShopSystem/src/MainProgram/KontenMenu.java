@@ -32,10 +32,11 @@ import java.sql.Statement;
  *
  * @author Panorama121
  */
-public class KontenMenu extends JPanel{
+public class KontenMenu extends JPanel {
     
     SubCat sc;
     CardLayout cl = new CardLayout();
+    private boolean tambah;
     
     public KontenMenu(){
         init();
@@ -157,6 +158,8 @@ public class KontenMenu extends JPanel{
         return dimg;
     };
     
+    
+    
     JButton btnMakanan;
     JButton btnKopi;
     JButton btnNkopi;
@@ -171,4 +174,6 @@ public class KontenMenu extends JPanel{
 
     JLabel lblCat;
     JLabel lblMenu;
+
+    
 }
