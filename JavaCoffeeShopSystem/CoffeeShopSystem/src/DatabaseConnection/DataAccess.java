@@ -58,9 +58,24 @@ public class DataAccess {
 
         return listItem;
     }
-
-//      public void showHistory(){
-//          
-//          
-//      }  
+    
+    public static void updateItem(){
+        
+        
+        
+    }
+    
+    public static void deleteItem(int id){
+        
+        String query = "DELETE FROM barang WHERE id_barang = ?";
+        try {
+            PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);
+            st.setInt(1, id);
+            
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
 }
