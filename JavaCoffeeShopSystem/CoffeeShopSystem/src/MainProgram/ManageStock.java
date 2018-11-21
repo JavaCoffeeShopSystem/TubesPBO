@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -94,7 +95,7 @@ public class ManageStock extends JPanel {
         jbDelete.setBackground(Color.LIGHT_GRAY);
 
         //Tabel item yang ada dalam stock
-        jbShowStock(DataAccess.showStock());
+        showStock(DataAccess.showStock());
 
         add(jlbItem);
         add(jtfItem);
@@ -132,7 +133,28 @@ public class ManageStock extends JPanel {
         jbUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jbUpdateClick(e);
+                int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Masukan id barang : "));
+                Item i = DataAccess.searchItem(id);
+
+                if (i == null) {
+                    JOptionPane.showMessageDialog(null, "Barang tidak ditemukan!");
+                } else {
+                    updateItem();
+                    jbUpdate2.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            Item i2 = new Item();
+                            i2.setId(id);
+                            i2.setName(jtfItem.getText());
+                            i2.setQua(Integer.parseInt(jtfQua.getText()));
+                            i2.setUnit(jtfUnit.getText());
+                            i2.setPrice(Integer.parseInt(jtfPrice.getText()));
+                            DataAccess.updateItem(i2);
+                            showStock(DataAccess.showStock());
+                            JOptionPane.showMessageDialog(null, "Tabel telah diperbaharui");
+                        }
+                    });
+                }
             }
         });
 
@@ -142,7 +164,7 @@ public class ManageStock extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Input Id : "));
                 DataAccess.deleteItem(id);
-                jbShowStock(DataAccess.showStock());
+                showStock(DataAccess.showStock());
                 JOptionPane.showMessageDialog(null, "Table stok berhasil diperbaharui");
             }
         });
@@ -185,10 +207,10 @@ public class ManageStock extends JPanel {
 
     //Akses stock dengan isi baru
     private void jbStockClick(ActionEvent e) {
-        jbShowStock(DataAccess.showStock());
+        showStock(DataAccess.showStock());
     }
 
-    private void jbShowStock(List<Item> listItem) {
+    private void showStock(List<Item> listItem) {
         String[] title = {"id", "Item", "Qua", "Unit", "Price"};
         Object[][] arrObj = new Object[listItem.size()][5];
 
@@ -210,16 +232,67 @@ public class ManageStock extends JPanel {
         add(jscJsc1);
 
     }
-    
-    
-    private void jbUpdateClick(ActionEvent e) {
 
+    private void updateItem() {
+
+        JDialog jd = new JDialog();
+        jd.setLayout(null);
+        jd.setLocationRelativeTo(null);
+        jd.setSize(500, 300);
+
+        jlbItem = new JLabel("Item");
+        jlbItem.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        jlbItem.setBounds(8, 20, 100, 35);
+
+        jtfItem = new JTextField();
+        jtfItem.setBounds(110, 22, 200, 30);
+
+        //Input kuantitas item 
+        jlbQua = new JLabel("Kuantitas");
+        jlbQua.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        jlbQua.setBounds(8, 35, 100, 75);
+
+        jtfQua = new JTextField("0");
+        jtfQua.setBounds(110, 61, 100, 30);
+
+        //Input satuan item
+        jlbUnit = new JLabel("Satuan");
+        jlbUnit.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        jlbUnit.setBounds(8, 76, 100, 75);
+
+        jtfUnit = new JTextField();
+        jtfUnit.setBounds(110, 100, 100, 30);
+
+        //Input harga item
+        jlbPrice = new JLabel("Harga");
+        jlbPrice.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        jlbPrice.setBounds(8, 117, 100, 75);
+
+        jtfPrice = new JTextField("0");
+        jtfPrice.setBounds(110, 140, 100, 30);
+
+        //Button update stock
+        jbUpdate2 = new JButton("Update");
+        jbUpdate2.setBounds(110, 200, 200, 30);
+        jbUpdate2.setBackground(Color.LIGHT_GRAY);
+
+        jd.add(jlbItem);
+        jd.add(jtfItem);
+        jd.add(jlbQua);
+        jd.add(jtfQua);
+        jd.add(jlbUnit);
+        jd.add(jtfUnit);
+        jd.add(jlbPrice);
+        jd.add(jtfPrice);
+        jd.add(jbUpdate2);
+
+        jd.setVisible(true);
     }
-    
 
     JButton jbAdd;
     JButton jbStock;
     JButton jbUpdate;
+    JButton jbUpdate2;
     JButton jbDelete;
 
     JTextField jtfItem;
@@ -231,11 +304,10 @@ public class ManageStock extends JPanel {
     JLabel jlbQua;
     JLabel jlbUnit;
     JLabel jlbPrice;
-    JLabel jlbHistory;
 
     JTable jtbStock;
     JScrollPane jscJsc1;
+    JComboBox jCb;
 
-    JTabbedPane jtpPn;
     JSplitPane jspPn;
 }
