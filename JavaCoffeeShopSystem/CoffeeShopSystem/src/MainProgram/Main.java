@@ -30,16 +30,17 @@ public class Main extends JFrame{
         initial();
     }
     
-    public static String subCat;
-    public static String categori;
+    private static ListMenu lm = new ListMenu();
     
+    public static ListMenu getListMenu () {
+        return lm;
+    }
     public void initial(){
-        List list = new ArrayList();
-        lm = new ListMenu("v","v","v","v");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        setSize(1500,900);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(1600,900);
         setLayout(new BorderLayout());
+        
         
 //        t.start();
         pnlKonten = new JPanel();
@@ -62,7 +63,6 @@ public class Main extends JFrame{
 
     JPanel pnlKonten;
     JPanel pnlList;
-    public ListMenu lm;
     
     
     

@@ -5,6 +5,7 @@
  */
 package MainProgram;
 
+import DatabaseConnection.DataAccess;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import static java.awt.Component.CENTER_ALIGNMENT;
@@ -12,10 +13,15 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -32,27 +38,20 @@ import javax.swing.table.TableColumn;
  *
  * @author Panorama121
  */
-public class ListMenu extends JPanel implements Runnable {
+public class ListMenu extends JPanel{
     
     
     
-    public ListMenu(String nama, String harga, String qty, String cb){
-        init(nama, harga, qty, cb);
+    public ListMenu(){
+        init();
     }
     
-    public static ArrayList<String> arr = new ArrayList<String>();
+    private static ArrayList<Menu> arr = new ArrayList<Menu>();
     
-    public void tambahArr(String s){
-        arr.add(s);
-    }
+    public static Menu m = new Menu();
     
-    public String getArr(int a){
-        return arr.get(a);
-    }
     
-    public void init(String nama, String harga, String qty, String cb){
-        
-        ArrayList<String> arr = new ArrayList<String>();
+    public void init(){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setBackground(Color.WHITE);
         //label list pesan
@@ -68,7 +67,7 @@ public class ListMenu extends JPanel implements Runnable {
         
         //pnl3
         pnlGrid = new JPanel();
-        pnlGrid.setLayout(new GridLayout(0,4,15,0));
+        pnlGrid.setLayout(new GridLayout(0,3,15,0));
         pnlGrid.setBackground(Color.WHITE);
         pnlBorder.add(pnlGrid,BorderLayout.NORTH);
         
@@ -90,35 +89,22 @@ public class ListMenu extends JPanel implements Runnable {
         lblHarga.setFont(new Font("Arial",Font.PLAIN,30));
         pnlGrid.add(lblHarga);
         
-        //lbl cb pada list pesanan
-        lblCb = new JLabel("CB");
-        lblCb.setAlignmentX(CENTER_ALIGNMENT);
-        lblCb.setFont(new Font("Arial",Font.PLAIN,30));
-        pnlGrid.add(lblCb);
-        
         //pnl4
         pnlBtn = new JPanel();
         pnlBtn.setLayout(new FlowLayout(FlowLayout.CENTER,30, 0));
         pnlBorder.add(pnlBtn,BorderLayout.PAGE_END);
         
+        tbl = new JTable();
+        DefaultTableModel dt =(DefaultTableModel) tbl.getModel();
+        dt.addColumn("Nama");
+        dt.addColumn("Jumlah");
+        dt.addColumn("Harga");
         
-        dtm.addColumn("Nama");
-        dtm.addColumn("Jumlah");
-        dtm.addColumn("Harga");
-        dtm.addColumn("CB");
-        tbl = new JTable(dtm);
-        tbl.setRowHeight(35);
-        tbl.setFont(new Font("Arial", Font.PLAIN, 25));
-        
+        tbl.setModel(dt);
         pnlBorder.add(tbl);
         
         //ukuran btn
         Dimension d = new Dimension(100,50);
-        
-        //btn order
-//        btnAdd = new JButton("Add");
-//        btnAdd.setPreferredSize(d);
-//        pnlBtn.add(btnAdd);
         
          //btn delete order
         btnDelete = new JButton("Delete");
@@ -132,23 +118,77 @@ public class ListMenu extends JPanel implements Runnable {
         btnOrder.setPreferredSize(d);
         pnlBtn.add(btnOrder);
         
-        for (int i = 0; i < arr.size(); i++) {
-            System.out.println(getArr(i));
-        }
+        pnlBtn.setBackground(Color.WHITE);
         
-        btnAdd.addActionListener(new ActionListener() {
+        btnOrder.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                actionBtnAdd(arr);
+                actionBtnOrder();
+            }
+        });
+        
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                actionDelete();
             }
         });
     }
     
-    private void actionBtnAdd(List <String> list){
-        for (int i = 0; i < list.size(); i++) {
-            dtm.addRow(new Object[]{list.get(i)});
+    public void addRowTable(){
+        //set tanggal
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+	Date date = new Date();
+        m.setDate(dateFormat.format(date));
+        
+        tbl.setRowHeight(35);
+        tbl.setFont(new Font("Arial", Font.PLAIN, 15));
+        arr.add(m);
+        
+        DefaultTableModel tblModel =(DefaultTableModel) tbl.getModel();
+        System.out.println(arr.size());
+        Object []ob = new Object[4];
+        ob[0] = arr.get(arr.size()-1).getNama();
+        ob[1] = arr.get(arr.size()-1).getJml();
+        ob[2] = arr.get(arr.size()-1).getHarga();
+        tblModel.addRow(ob);
+        
+    }
+    
+    public void clearTable(){
+        DefaultTableModel tblModel =(DefaultTableModel) tbl.getModel();
+        while (tblModel.getRowCount()>0) {
+            tblModel.removeRow(0);
         }
     }
+    
+    private void actionBtnOrder(){
+        
+        //insert into database
+        for (Menu menu : arr) {
+            new DataAccess().addPenjualan(menu);
+        }
+        //clear the array of Menu
+        arr.clear();
+        
+        //clear the JTable
+        clearTable();
+        
+        
+        System.out.println(arr.size());
+    }
+    
+    private void actionDelete(){
+        DefaultTableModel tblModel =(DefaultTableModel) tbl.getModel();
+        int selectecRow = tbl.getSelectedRow();
+        //hapus row yang di tunjuk dari arr
+        arr.remove(selectecRow);
+        System.out.println(arr.size());
+        //hapus row yang di tunjuk
+        tblModel.removeRow(selectecRow);
+    }
+    
+  
    
     JButton btnOrder;
     JButton btnDelete;
@@ -159,22 +199,14 @@ public class ListMenu extends JPanel implements Runnable {
     JPanel pnlBtn;
     JPanel pnlBt;
     
-    public static JTable tbl;
-    public DefaultTableModel dtm = new DefaultTableModel();
+    JTable tbl;
     JLabel lblListPesan;
     JLabel lblNama;
     JLabel lblHarga;
     JLabel lblQty;
-    JLabel lblCb;
-    JLabel lblTest;
 
-    @Override
-    public void run() {
-        System.out.println("s");
-        validate();
-        repaint();
-        dtm.addRow(new Object[]{"sdf"});
-    }
+
+    
 
     
 }

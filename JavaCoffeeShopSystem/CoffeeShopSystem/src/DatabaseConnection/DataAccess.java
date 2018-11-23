@@ -6,6 +6,7 @@
 package DatabaseConnection;
 
 import MainProgram.Item;
+import MainProgram.Menu;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -100,6 +101,23 @@ public class DataAccess {
         try {
             PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);
             st.setInt(1, id);
+
+            st.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    public void addPenjualan(Menu jual) {
+
+        String query = "INSERT INTO penjualan (id_menu, harga, jumlah, tgl) VALUES (?,?,?,?)";
+        try {
+            PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);
+            st.setInt(1, jual.getId_menu());
+            st.setInt(2, jual.getHarga());
+            st.setInt(3, jual.getJml());
+            st.setString(4, jual.getDate());
 
             st.execute();
         } catch (SQLException e) {

@@ -24,8 +24,7 @@ public class Makanan extends JButton{
     private int harga;
     private String pictUrl;
     
-    public Makanan(int x,int y ,int w, int h, String nama, String url){
-        setText(nama);
+    public Makanan(int x,int y ,int w, int h, String url){
         setBounds(x, y, 225, 225);
         setBackground(Color.yellow);
         

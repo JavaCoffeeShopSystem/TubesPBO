@@ -36,10 +36,6 @@ public class SubCat extends JPanel {
         initial(kategori, subKategori);
     }
     
-    String nama;
-    String harga;
-    String url;
-    
     public void initial(String k, String sk){
         
         pnlNull = new JPanel();
@@ -70,9 +66,9 @@ public class SubCat extends JPanel {
             Statement smt = con.createStatement();
             
             if (categori == "makanan") {
-                sMenu= "SELECT m.nama,m.harga,m.url FROM menu m inner join " + categori +" c on (m.id_menu = c.id_menu) ";
+                sMenu= "SELECT * FROM menu m inner join " + categori +" c on (m.id_menu = c.id_menu) ";
             }else{
-                 sMenu= "SELECT m.nama,m.harga,m.url "
+                 sMenu= "SELECT * "
                          + "FROM menu m inner join " + categori +" c on (m.id_menu = c.id_menu) where c.category = '"+ subCat + "'";
                  
             }
@@ -90,22 +86,26 @@ public class SubCat extends JPanel {
             rs.beforeFirst();
             
             int i =1 ;
-            while(rs.next()) {
-                
-                this.nama = rs.getString(1);
-                this.harga = rs.getString(2);
-                this.url = rs.getString(3);
+            while(rs.next()) {                
                 
                 if (i == 5) {
                     i-=4;
                     jaraky+= (50 + heightB);
                 }
                 int x = jarakx + ((jarakx+ widthB)*(i-1));
-                pnlNull.add(new Makanan(x, jaraky,widthB, heightB, nama ,url)).addMouseListener(new MouseListener() {
+                
+                Menu m = new Menu();
+                m.setNama(rs.getString("nama"));
+                m.setId_menu(rs.getInt("id_menu"));
+                m.setHarga(rs.getInt("harga"));
+                m.setUrl(rs.getString("url"));
+                
+                
+                pnlNull.add(new Makanan(x, jaraky,widthB, heightB,m.getUrl()) ).addMouseListener(new MouseListener() {
                 
                     @Override
                     public void mouseClicked(MouseEvent me) {
-                        actionMenu(url,k,sk);
+                        actionMenu(k,sk,m);
                     }
 
                     @Override
@@ -149,9 +149,11 @@ public class SubCat extends JPanel {
         
     }
     
-    private void actionMenu(String url, String s, String sk){
+    private void actionMenu(String k, String sk, Menu menu){
+        ListMenu.m = menu;
+        
         CardLayout cl  = (CardLayout) this.getLayout(); ;
-        Menu m = new Menu(url,s,sk,nama,harga);
+        PnlMenu m = new PnlMenu(k,sk);
         this.add(m,"m");
         cl.addLayoutComponent(m, "m");
         
@@ -167,8 +169,6 @@ public class SubCat extends JPanel {
         cl.show(this, "km");
     }
     
-    
-    
     KontenMenu km;
 
     JButton btnOrder;
@@ -177,8 +177,6 @@ public class SubCat extends JPanel {
     
     JPanel pnlNull;
     
-//    JCheckBox as;
-
     JLabel lblMenu;
     
     
