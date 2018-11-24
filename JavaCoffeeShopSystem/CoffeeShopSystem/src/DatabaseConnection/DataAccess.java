@@ -120,6 +120,8 @@ public class DataAccess {
             st.setString(4, jual.getDate());
 
             st.execute();
+            System.out.println(jual.getNama());
+            System.out.println(jual.getHarga());
         } catch (SQLException e) {
             e.printStackTrace();
         }

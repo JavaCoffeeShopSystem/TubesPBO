@@ -52,35 +52,40 @@ public class KontenMenu extends JPanel {
         int jarakx = 25, jaraky = 300, width = 300, height = 300; //jarak adalah jarak vertikal antar button
         int widthB = 218, heightB = 218; //jarak adalah jarak vertikal antar button di pnlSubKategori
         int listX = 1000,listY=0, listW=400,listH=900; //ukuran dan koordinat panel list
-
+        
         setLayout(cl);
         
+        pnlKategori.setBackground(Color.white);
         pnlKategori.setLayout(null);
         add(pnlKategori,"kat");
         cl.show(this, "kat");
         
+        //set warna panel kategori
+        pnlKategori.setBackground(Main.biru);
+        
         //set lebel
         lblCat = new JLabel("CATEGORY");
         lblCat.setBounds(360,75,280,50);
+        lblCat.setForeground(Main.merah);
         lblCat.setFont(new Font("Arial",Font.PLAIN,50));
         pnlKategori.add(lblCat);
 
         //btn Makanan
         btnMakanan = new JButton("asd", new ImageIcon(resizeImage("img\\food-icon.png", width,height)));
         btnMakanan.setBounds(jarakx, jaraky, width, height);
-        btnMakanan.setBackground(Color.RED);
+        btnMakanan.setBackground(Main.merah);
         pnlKategori.add(btnMakanan);
         
         //btn Kopi
         btnKopi = new JButton(new ImageIcon(resizeImage("img\\coffee-flat.png", width, height)));
         btnKopi.setBounds((width+(jarakx*2)), jaraky, width, height);
-        btnKopi.setBackground(Color.red);
+        btnKopi.setBackground(Main.merah);
         pnlKategori.add(btnKopi);
         
          //btn non-Kopi
         btnNkopi = new JButton(new ImageIcon(resizeImage("img\\non-coffee.png", width, height)));
         btnNkopi.setBounds(((width*2)+(jarakx*3)), jaraky, width, height);
-        btnNkopi.setBackground(Color.red);
+        btnNkopi.setBackground(Main.merah);
         pnlKategori.add(btnNkopi);
    
         
@@ -116,7 +121,7 @@ public class KontenMenu extends JPanel {
     
     private void actionBtnMakan(){
         if (sc == null) {
-            sc = new SubCat("makanan","");
+            sc = new SubCat("Makanan","");
             this.add(sc,"sc");
             cl.addLayoutComponent(sc, "sc");
             
@@ -127,7 +132,7 @@ public class KontenMenu extends JPanel {
     
     private void actionBtnKopi(){
         if (sc == null) {
-            sc = new SubCat("minuman","kopi");
+            sc = new SubCat("Minuman","kopi");
             this.add(sc,"sc");
             cl.addLayoutComponent(sc, "sc");
         }
@@ -137,7 +142,7 @@ public class KontenMenu extends JPanel {
     
     private void actionBtnNKopi(){
         if (sc == null) {
-            sc = new SubCat("minuman","non-kopi");
+            sc = new SubCat("Minuman","non-kopi");
             this.add(sc,"sc");
             cl.addLayoutComponent(sc, "sc");
         }

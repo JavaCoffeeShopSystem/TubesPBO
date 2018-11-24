@@ -13,7 +13,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -25,14 +24,13 @@ import java.util.Vector;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 /**
  *
@@ -53,10 +51,11 @@ public class ListMenu extends JPanel{
     
     public void init(){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        setBackground(Color.WHITE);
+        setBackground(Main.merah);
         //label list pesan
         lblListPesan = new JLabel("List Pesan");
         lblListPesan.setAlignmentX(CENTER_ALIGNMENT);
+        lblListPesan.setForeground(Main.biru);
         lblListPesan.setFont(new Font("Arial",Font.PLAIN,40));
         add(lblListPesan);
         
@@ -68,25 +67,31 @@ public class ListMenu extends JPanel{
         //pnl3
         pnlGrid = new JPanel();
         pnlGrid.setLayout(new GridLayout(0,3,15,0));
-        pnlGrid.setBackground(Color.WHITE);
+        pnlGrid.setBackground(new Color(255, 128, 128));
         pnlBorder.add(pnlGrid,BorderLayout.NORTH);
+        
+        //set font
+        Font font = new Font("Arial",Font.PLAIN,30);
         
         //lbl nama pada list pesanan
         lblNama = new JLabel("Nama");
         lblNama.setAlignmentX(CENTER_ALIGNMENT);
-        lblNama.setFont(new Font("Arial",Font.PLAIN,30));
+        lblNama.setForeground(Main.biru);
+        lblNama.setFont(font);
         pnlGrid.add(lblNama);
           
         //lbl qty pada list pesanan
         lblQty = new JLabel("Qty");
         lblQty.setAlignmentX(CENTER_ALIGNMENT);
-        lblQty.setFont(new Font("Arial",Font.PLAIN,30));
+        lblQty.setForeground(Main.biru);
+        lblQty.setFont(font);
         pnlGrid.add(lblQty);
         
          //lbl harga pada list pesanan
         lblHarga = new JLabel("Harga");
         lblHarga.setAlignmentX(CENTER_ALIGNMENT);
-        lblHarga.setFont(new Font("Arial",Font.PLAIN,30));
+        lblHarga.setForeground(Main.biru);
+        lblHarga.setFont(font);
         pnlGrid.add(lblHarga);
         
         //pnl4
@@ -101,36 +106,61 @@ public class ListMenu extends JPanel{
         dt.addColumn("Harga");
         
         tbl.setModel(dt);
+        tbl.setBackground(new Color(255,128,128));
         pnlBorder.add(tbl);
         
         //ukuran btn
-        Dimension d = new Dimension(100,50);
+        Dimension d = new Dimension(150,75);      
+        
+        //label delete
+        lblDelete = new JLabel("Delete");
+        lblDelete.setFont(new Font("Arial",Font.PLAIN,30));
+        lblDelete.setAlignmentX(CENTER_ALIGNMENT);
+        lblDelete.setForeground(Main.merah);
         
          //btn delete order
-        btnDelete = new JButton("Delete");
+        btnDelete = new JButton();
         btnDelete.setPreferredSize(d);
-        btnDelete.setBackground(Color.green);
+        btnDelete.add(lblDelete);
+        btnDelete.setBackground(Main.biru);
         pnlBtn.add(btnDelete);
         
+        //label Order
+        lblOrder = new JLabel("Order");
+        lblOrder.setFont(new Font("Arial",Font.PLAIN,30));
+        lblOrder.setAlignmentX(CENTER_ALIGNMENT);
+        lblOrder.setForeground(Main.merah);
+        
         //btn order
-        btnOrder = new JButton("Order");
-        btnOrder.setBackground(Color.green);
+        btnOrder = new JButton();
         btnOrder.setPreferredSize(d);
+        btnOrder.add(lblOrder);
+        btnOrder.setBackground(Main.biru);
         pnlBtn.add(btnOrder);
         
-        pnlBtn.setBackground(Color.WHITE);
+        pnlBtn.setBackground(new Color(255, 128, 128));
         
         btnOrder.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                actionBtnOrder();
+                if (arr.size() == 0) {
+                    JOptionPane.showMessageDialog(null, "Belum Ada Menu yang Terpilih", "Warning!!",JOptionPane.WARNING_MESSAGE);
+                }else{
+                    actionBtnOrder();
+                }
+                
             }
         });
         
         btnDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                actionDelete();
+                try {
+                    actionDelete();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Pilih row yang akan di hapus dahulu!!!", "Warning",JOptionPane.WARNING_MESSAGE);
+                }
+                
             }
         });
     }
@@ -174,7 +204,6 @@ public class ListMenu extends JPanel{
         //clear the JTable
         clearTable();
         
-        
         System.out.println(arr.size());
     }
     
@@ -204,6 +233,8 @@ public class ListMenu extends JPanel{
     JLabel lblNama;
     JLabel lblHarga;
     JLabel lblQty;
+    JLabel lblDelete;
+    JLabel lblOrder;
 
 
     

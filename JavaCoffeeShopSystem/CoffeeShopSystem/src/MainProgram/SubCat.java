@@ -49,23 +49,25 @@ public class SubCat extends JPanel {
         setLayout(new CardLayout());
         
         pnlNull.setLayout(null);
+        pnlNull.setBackground(new Color(50, 75, 109));
         add(pnlNull,"sc");
         new KontenMenu().cl.addLayoutComponent(new KontenMenu(), "sc");
         
         lblMenu = new JLabel(k);
-        lblMenu.setBounds(360,25,280,50);
+        lblMenu.setBounds(400,25,280,50);
+        lblMenu.setForeground(new Color(255,128,128));
         lblMenu.setFont(new Font("Arial",Font.PLAIN,50));
         pnlNull.add(lblMenu);
         
         Connection con = new ConnectionManager().getConnection();
         
         try {
-            String categori = k;
+            String categori = k.toLowerCase();
             String subCat = sk;
             String sMenu;
             Statement smt = con.createStatement();
             
-            if (categori == "makanan") {
+            if (categori.equals("makanan")) {
                 sMenu= "SELECT * FROM menu m inner join " + categori +" c on (m.id_menu = c.id_menu) ";
             }else{
                  sMenu= "SELECT * "
@@ -132,11 +134,17 @@ public class SubCat extends JPanel {
         } catch (SQLException e) {
             e.printStackTrace(System.err);
         }
-         
         
-        btnBack = new JButton("Back");
+        //label delete
+        lblDelete = new JLabel("Back");
+        lblDelete.setFont(new Font("Arial",Font.PLAIN,30));
+        lblDelete.setAlignmentX(CENTER_ALIGNMENT);
+        lblDelete.setForeground(Main.biru);
+        
+        btnBack = new JButton();
         btnBack.setBounds(0,780,150,75);
-        btnBack.setBackground(Color.green);
+        btnBack.add(lblDelete);
+        btnBack.setBackground(Main.merah);
         pnlNull.add(btnBack);
    
         //action listener btnBack
@@ -178,6 +186,7 @@ public class SubCat extends JPanel {
     JPanel pnlNull;
     
     JLabel lblMenu;
+    JLabel lblDelete;
     
     
 }

@@ -7,7 +7,6 @@ package MainProgram;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -20,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableColumnModel;
@@ -46,12 +46,22 @@ public class PnlMenu extends JPanel{
         pnlMain.add(lblGambar,BorderLayout.CENTER);
         
         pnlBorderS = new JPanel();
+        
         pnlBorderS.setLayout(new BorderLayout());
         
         pnlBorderW = new JPanel();
         pnlBorderW.setLayout(new FlowLayout());
-        btnBack = new JButton("Back");
-        btnBack.setPreferredSize(new Dimension(80,50));
+        
+        //lbl back
+        lblBack = new JLabel("Back");
+        lblBack.setForeground(Main.biru);
+        lblBack.setAlignmentX(CENTER_ALIGNMENT);
+        lblBack.setFont(new Font("Arial", Font.PLAIN, 30));
+        
+        btnBack = new JButton();
+        btnBack.setPreferredSize(new Dimension(150,75));
+        btnBack.add(lblBack);
+        btnBack.setBackground(Main.merah);
         pnlBorderW.add(btnBack);
         pnlBorderS.add(pnlBorderW,BorderLayout.WEST);
         
@@ -60,16 +70,27 @@ public class PnlMenu extends JPanel{
         txtJml = new JTextField(2);
         txtJml.setFont(new Font("Arial", Font.PLAIN, 30));
         txtJml.setHorizontalAlignment(JTextField.CENTER);
-        
-        
         pnlBorderC.add(txtJml);
         
-        btnOK = new JButton("OK");
-        btnOK.setPreferredSize(new Dimension(55,55));
+        lblOk = new JLabel("OK");
+        lblOk.setAlignmentX(CENTER_ALIGNMENT);
+        lblOk.setFont(new Font("Arial",Font.PLAIN,20));
+        lblOk.setForeground(Main.biru);
+        
+        btnOK = new JButton();
+        btnOK.setPreferredSize(new Dimension(65,65));
+        btnOK.add(lblOk);
+        btnOK.setBackground(Main.merah);
+        
         pnlBorderC.add(btnOK);
         pnlBorderS.add(pnlBorderC,BorderLayout.CENTER);
         pnlMain.add(pnlBorderS,BorderLayout.SOUTH);
         
+        pnlBorderC.setBackground(Main.biru);
+        pnlBorderS.setBackground(Main.biru);
+        pnlBorderW.setBackground(Main.biru);
+        pnlMain.setBackground(Main.biru);
+
         
         //action listener btnBack
         btnBack.addActionListener(new ActionListener() {
@@ -82,7 +103,13 @@ public class PnlMenu extends JPanel{
         btnOK.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae){
-                actionBtnOK();
+                try {
+                    actionBtnOK();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Kolom kosong!!\natau Pastikan input adalh angka!! ");
+                }
+                
+                
             }
         });
         
@@ -113,11 +140,16 @@ public class PnlMenu extends JPanel{
     }
     
     JButton btnOK;
+    JButton btnBack;
+
     JTextField txtJml;
+    
     JLabel lblGambar;
+    JLabel lblOk;
+    JLabel lblBack;
+    
     JPanel pnlMain;
     JPanel pnlBorderS;
     JPanel pnlBorderW;
     JPanel pnlBorderC;
-    JButton btnBack;
 }

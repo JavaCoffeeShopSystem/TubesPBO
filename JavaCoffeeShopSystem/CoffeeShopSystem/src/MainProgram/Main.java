@@ -7,6 +7,7 @@ package MainProgram;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,9 @@ public class Main extends JFrame{
         initial();
     }
     
+    public static Color merah = new Color(255,128,128);
+    public static Color biru = new Color(50, 75, 109);
+        
     private static ListMenu lm = new ListMenu();
     
     public static ListMenu getListMenu () {
@@ -50,6 +54,8 @@ public class Main extends JFrame{
         pnlKonten.add(new KontenMenu());
         
         pnlList.setLayout(new BorderLayout());
+        Dimension d = new Dimension(400, 900);
+        pnlList.setPreferredSize(d);
         pnlList.add(lm);
         
         getContentPane().add(pnlKonten,BorderLayout.CENTER);
