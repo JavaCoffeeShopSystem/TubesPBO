@@ -49,13 +49,13 @@ public class SubCat extends JPanel {
         setLayout(new CardLayout());
         
         pnlNull.setLayout(null);
-        pnlNull.setBackground(new Color(50, 75, 109));
+        pnlNull.setBackground(Kasir.biru);
         add(pnlNull,"sc");
         new KontenMenu().cl.addLayoutComponent(new KontenMenu(), "sc");
         
         lblMenu = new JLabel(k);
         lblMenu.setBounds(400,25,280,50);
-        lblMenu.setForeground(new Color(255,128,128));
+        lblMenu.setForeground(Kasir.merah);
         lblMenu.setFont(new Font("Arial",Font.PLAIN,50));
         pnlNull.add(lblMenu);
         
@@ -96,7 +96,7 @@ public class SubCat extends JPanel {
                 }
                 int x = jarakx + ((jarakx+ widthB)*(i-1));
                 
-                Menu m = new Menu();
+                TblPenjualan m = new TblPenjualan();
                 m.setNama(rs.getString("nama"));
                 m.setId_menu(rs.getInt("id_menu"));
                 m.setHarga(rs.getInt("harga"));
@@ -139,12 +139,12 @@ public class SubCat extends JPanel {
         lblDelete = new JLabel("Back");
         lblDelete.setFont(new Font("Arial",Font.PLAIN,30));
         lblDelete.setAlignmentX(CENTER_ALIGNMENT);
-        lblDelete.setForeground(Main.biru);
+        lblDelete.setForeground(Kasir.biru);
         
         btnBack = new JButton();
         btnBack.setBounds(0,780,150,75);
         btnBack.add(lblDelete);
-        btnBack.setBackground(Main.merah);
+        btnBack.setBackground(Kasir.merah);
         pnlNull.add(btnBack);
    
         //action listener btnBack
@@ -157,7 +157,7 @@ public class SubCat extends JPanel {
         
     }
     
-    private void actionMenu(String k, String sk, Menu menu){
+    private void actionMenu(String k, String sk, TblPenjualan menu){
         ListMenu.m = menu;
         
         CardLayout cl  = (CardLayout) this.getLayout(); ;

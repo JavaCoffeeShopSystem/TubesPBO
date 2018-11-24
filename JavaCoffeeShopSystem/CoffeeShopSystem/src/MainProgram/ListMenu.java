@@ -44,18 +44,18 @@ public class ListMenu extends JPanel{
         init();
     }
     
-    private static ArrayList<Menu> arr = new ArrayList<Menu>();
+    private static ArrayList<TblPenjualan> arr = new ArrayList<TblPenjualan>();
     
-    public static Menu m = new Menu();
+    public static TblPenjualan m = new TblPenjualan();
     
     
     public void init(){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        setBackground(Main.merah);
+        setBackground(Kasir.merah);
         //label list pesan
         lblListPesan = new JLabel("List Pesan");
         lblListPesan.setAlignmentX(CENTER_ALIGNMENT);
-        lblListPesan.setForeground(Main.biru);
+        lblListPesan.setForeground(Kasir.biru);
         lblListPesan.setFont(new Font("Arial",Font.PLAIN,40));
         add(lblListPesan);
         
@@ -67,7 +67,7 @@ public class ListMenu extends JPanel{
         //pnl3
         pnlGrid = new JPanel();
         pnlGrid.setLayout(new GridLayout(0,3,15,0));
-        pnlGrid.setBackground(new Color(255, 128, 128));
+        pnlGrid.setBackground(Kasir.merah);
         pnlBorder.add(pnlGrid,BorderLayout.NORTH);
         
         //set font
@@ -76,21 +76,21 @@ public class ListMenu extends JPanel{
         //lbl nama pada list pesanan
         lblNama = new JLabel("Nama");
         lblNama.setAlignmentX(CENTER_ALIGNMENT);
-        lblNama.setForeground(Main.biru);
+        lblNama.setForeground(Kasir.biru);
         lblNama.setFont(font);
         pnlGrid.add(lblNama);
           
         //lbl qty pada list pesanan
         lblQty = new JLabel("Qty");
         lblQty.setAlignmentX(CENTER_ALIGNMENT);
-        lblQty.setForeground(Main.biru);
+        lblQty.setForeground(Kasir.biru);
         lblQty.setFont(font);
         pnlGrid.add(lblQty);
         
          //lbl harga pada list pesanan
         lblHarga = new JLabel("Harga");
         lblHarga.setAlignmentX(CENTER_ALIGNMENT);
-        lblHarga.setForeground(Main.biru);
+        lblHarga.setForeground(Kasir.biru);
         lblHarga.setFont(font);
         pnlGrid.add(lblHarga);
         
@@ -106,7 +106,9 @@ public class ListMenu extends JPanel{
         dt.addColumn("Harga");
         
         tbl.setModel(dt);
-        tbl.setBackground(new Color(255,128,128));
+        tbl.setBackground(Kasir.merah);
+        tbl.setRowHeight(35);
+        tbl.setFont(new Font("Arial", Font.PLAIN, 20));
         pnlBorder.add(tbl);
         
         //ukuran btn
@@ -116,29 +118,29 @@ public class ListMenu extends JPanel{
         lblDelete = new JLabel("Delete");
         lblDelete.setFont(new Font("Arial",Font.PLAIN,30));
         lblDelete.setAlignmentX(CENTER_ALIGNMENT);
-        lblDelete.setForeground(Main.merah);
+        lblDelete.setForeground(Kasir.merah);
         
          //btn delete order
         btnDelete = new JButton();
         btnDelete.setPreferredSize(d);
         btnDelete.add(lblDelete);
-        btnDelete.setBackground(Main.biru);
+        btnDelete.setBackground(Kasir.biru);
         pnlBtn.add(btnDelete);
         
         //label Order
         lblOrder = new JLabel("Order");
         lblOrder.setFont(new Font("Arial",Font.PLAIN,30));
         lblOrder.setAlignmentX(CENTER_ALIGNMENT);
-        lblOrder.setForeground(Main.merah);
+        lblOrder.setForeground(Kasir.merah);
         
         //btn order
         btnOrder = new JButton();
         btnOrder.setPreferredSize(d);
         btnOrder.add(lblOrder);
-        btnOrder.setBackground(Main.biru);
+        btnOrder.setBackground(Kasir.biru);
         pnlBtn.add(btnOrder);
         
-        pnlBtn.setBackground(new Color(255, 128, 128));
+        pnlBtn.setBackground(Kasir.merah);
         
         btnOrder.addActionListener(new ActionListener() {
             @Override
@@ -171,8 +173,7 @@ public class ListMenu extends JPanel{
 	Date date = new Date();
         m.setDate(dateFormat.format(date));
         
-        tbl.setRowHeight(35);
-        tbl.setFont(new Font("Arial", Font.PLAIN, 15));
+        
         arr.add(m);
         
         DefaultTableModel tblModel =(DefaultTableModel) tbl.getModel();
@@ -195,10 +196,10 @@ public class ListMenu extends JPanel{
     private void actionBtnOrder(){
         
         //insert into database
-        for (Menu menu : arr) {
+        for (TblPenjualan menu : arr) {
             new DataAccess().addPenjualan(menu);
         }
-        //clear the array of Menu
+        //clear the array of TblPenjualan
         arr.clear();
         
         //clear the JTable

@@ -9,7 +9,7 @@ package MainProgram;
  *
  * @author Panorama121
  */
-public class Menu {
+public class TblPenjualan {
     private String nama;
     private int id_menu;
     private int harga;

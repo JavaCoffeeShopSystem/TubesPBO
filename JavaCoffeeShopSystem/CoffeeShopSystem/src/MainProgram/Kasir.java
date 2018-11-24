@@ -21,18 +21,18 @@ import javax.swing.JPanel;
  *
  * @author Panorama121
  */
-public class Main extends JFrame{
+public class Kasir extends JFrame{
 
     /**
      * @param args the command line arguments
      */
     
-    public Main(){
+    public Kasir(){
         initial();
     }
     
-    public static Color merah = new Color(255,128,128);
-    public static Color biru = new Color(50, 75, 109);
+    public static Color merah = new Color(242,125,132);
+    public static Color biru = new Color(99, 136, 193);
         
     private static ListMenu lm = new ListMenu();
     
@@ -63,7 +63,7 @@ public class Main extends JFrame{
     }
     
     public static void main(String[] args) {
-        new Main().setVisible(true);
+        new Kasir().setVisible(true);
     }
 
 

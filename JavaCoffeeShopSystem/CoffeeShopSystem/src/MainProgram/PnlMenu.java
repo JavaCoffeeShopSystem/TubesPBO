@@ -54,14 +54,14 @@ public class PnlMenu extends JPanel{
         
         //lbl back
         lblBack = new JLabel("Back");
-        lblBack.setForeground(Main.biru);
+        lblBack.setForeground(Kasir.biru);
         lblBack.setAlignmentX(CENTER_ALIGNMENT);
         lblBack.setFont(new Font("Arial", Font.PLAIN, 30));
         
         btnBack = new JButton();
         btnBack.setPreferredSize(new Dimension(150,75));
         btnBack.add(lblBack);
-        btnBack.setBackground(Main.merah);
+        btnBack.setBackground(Kasir.merah);
         pnlBorderW.add(btnBack);
         pnlBorderS.add(pnlBorderW,BorderLayout.WEST);
         
@@ -75,21 +75,21 @@ public class PnlMenu extends JPanel{
         lblOk = new JLabel("OK");
         lblOk.setAlignmentX(CENTER_ALIGNMENT);
         lblOk.setFont(new Font("Arial",Font.PLAIN,20));
-        lblOk.setForeground(Main.biru);
+        lblOk.setForeground(Kasir.biru);
         
         btnOK = new JButton();
         btnOK.setPreferredSize(new Dimension(65,65));
         btnOK.add(lblOk);
-        btnOK.setBackground(Main.merah);
+        btnOK.setBackground(Kasir.merah);
         
         pnlBorderC.add(btnOK);
         pnlBorderS.add(pnlBorderC,BorderLayout.CENTER);
         pnlMain.add(pnlBorderS,BorderLayout.SOUTH);
         
-        pnlBorderC.setBackground(Main.biru);
-        pnlBorderS.setBackground(Main.biru);
-        pnlBorderW.setBackground(Main.biru);
-        pnlMain.setBackground(Main.biru);
+        pnlBorderC.setBackground(Kasir.biru);
+        pnlBorderS.setBackground(Kasir.biru);
+        pnlBorderW.setBackground(Kasir.biru);
+        pnlMain.setBackground(Kasir.biru);
 
         
         //action listener btnBack
@@ -125,7 +125,7 @@ public class PnlMenu extends JPanel{
     }
     
     private void actionBtnOK(){
-        ListMenu l = Main.getListMenu(); // ambil listmenu yg diciptakan pertama kali  
+        ListMenu l = Kasir.getListMenu(); // ambil listmenu yg diciptakan pertama kali  
         int jml = Integer.parseInt(txtJml.getText());
         l.m.setJml(jml);
         l.addRowTable();

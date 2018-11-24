@@ -6,7 +6,8 @@
 package DatabaseConnection;
 
 import MainProgram.Item;
-import MainProgram.Menu;
+import MainProgram.TblMenu;
+import MainProgram.TblPenjualan;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -109,7 +110,7 @@ public class DataAccess {
 
     }
     
-    public void addPenjualan(Menu jual) {
+    public void addPenjualan(TblPenjualan jual) {
 
         String query = "INSERT INTO penjualan (id_menu, harga, jumlah, tgl) VALUES (?,?,?,?)";
         try {
@@ -122,6 +123,35 @@ public class DataAccess {
             st.execute();
             System.out.println(jual.getNama());
             System.out.println(jual.getHarga());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    public static void addMenu(TblMenu tm) {
+
+        String query = "INSERT INTO menu (nama, harga, url) VALUES (?,?,?)";
+        try {
+            PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);
+            st.setString(1, tm.getNama());
+            st.setDouble(2, tm.getHarga());
+            st.setString(3, tm.getUrl());
+            st.execute();
+            
+            if (tm.getTipe().equals("makanan")) {
+                String query2 = "INSERT INTO " + tm.getTipe() + " (id_menu) VALUES ((Select id_menu from menu where nama = '"+ tm.getNama() +"'))";
+                st = ConnectionManager.getConnection().prepareStatement(query2);
+                st.execute();
+            }
+            
+            if (tm.getTipe().equals("minuman")) {
+                String query2 = "INSERT INTO " + tm.getTipe() + " (id_menu, category) VALUES ((Select id_menu from menu where nama = '"+ tm.getNama() +"'), '" + tm.getKategori() + "')";
+                System.out.println(query2);
+                st = ConnectionManager.getConnection().prepareStatement(query2);
+                st.execute();
+            }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -20,7 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import MainProgram.Main;
+import MainProgram.Kasir;
 import java.awt.CardLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -61,31 +61,31 @@ public class KontenMenu extends JPanel {
         cl.show(this, "kat");
         
         //set warna panel kategori
-        pnlKategori.setBackground(Main.biru);
+        pnlKategori.setBackground(Kasir.biru);
         
         //set lebel
         lblCat = new JLabel("CATEGORY");
         lblCat.setBounds(360,75,280,50);
-        lblCat.setForeground(Main.merah);
+        lblCat.setForeground(Kasir.merah);
         lblCat.setFont(new Font("Arial",Font.PLAIN,50));
         pnlKategori.add(lblCat);
 
         //btn Makanan
         btnMakanan = new JButton("asd", new ImageIcon(resizeImage("img\\food-icon.png", width,height)));
         btnMakanan.setBounds(jarakx, jaraky, width, height);
-        btnMakanan.setBackground(Main.merah);
+        btnMakanan.setBackground(Kasir.merah);
         pnlKategori.add(btnMakanan);
         
         //btn Kopi
         btnKopi = new JButton(new ImageIcon(resizeImage("img\\coffee-flat.png", width, height)));
         btnKopi.setBounds((width+(jarakx*2)), jaraky, width, height);
-        btnKopi.setBackground(Main.merah);
+        btnKopi.setBackground(Kasir.merah);
         pnlKategori.add(btnKopi);
         
          //btn non-Kopi
         btnNkopi = new JButton(new ImageIcon(resizeImage("img\\non-coffee.png", width, height)));
         btnNkopi.setBounds(((width*2)+(jarakx*3)), jaraky, width, height);
-        btnNkopi.setBackground(Main.merah);
+        btnNkopi.setBackground(Kasir.merah);
         pnlKategori.add(btnNkopi);
    
         

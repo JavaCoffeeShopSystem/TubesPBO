@@ -5,14 +5,22 @@
  */
 package MainProgram;
 
+import DatabaseConnection.DataAccess;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,23 +36,28 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Ronaldo
  */
-public class ManageMenu extends JPanel {
+public class ManageMenu extends JFrame {
+    
+    private File file = new File("");
+    private TblMenu tm = new TblMenu();
+    private ButtonGroup bgGroup;
 
     public ManageMenu() {
         initComponent();
         setUpAction();
+        setVisible(true);
     }
 
     private void initComponent() {
         this.setLayout(null);
-
+        setSize(600,600);
         setLayout(null);
 
         //Add menu
         jlbFood = new JLabel("Menu Name");
         jlbFood.setBounds(120, 20, 120, 20);
         jlbFood.setFont(new Font("SansSerif", Font.PLAIN, 20));
-
+        add(jlbFood);
         jtfFood = new JTextField();
         jtfFood.setBounds(120, 55, 150, 30);
 
@@ -61,15 +74,18 @@ public class ManageMenu extends JPanel {
         jlbSelect.setFont(new Font("SansSerif", Font.PLAIN, 15));
         jlbSelect.setBounds(300, 15, 100, 20);
 
-        ButtonGroup bgGroup = new ButtonGroup();
+        bgGroup = new ButtonGroup();
 
         jrbJBFood = new JRadioButton("Food", true);
+        jrbJBFood.setActionCommand("makanan");
         jrbJBFood.setBounds(300, 45, 100, 20);
 
         jrbJBBev = new JRadioButton("Beverage", true);
+        jrbJBBev.setActionCommand("non-kopi");
         jrbJBBev.setBounds(300, 85, 100, 20);
 
         jrbJBCoff = new JRadioButton("Coffee", true);
+        jrbJBCoff.setActionCommand("kopi");
         jrbJBCoff.setBounds(300, 125, 100, 20);
 
         //Add Menu
@@ -80,7 +96,13 @@ public class ManageMenu extends JPanel {
         jbShowMenu = new JButton("Menu");
         jbShowMenu.setBounds(200, 155, 70, 30);
         
+        
+        //ask img
+        jbAddPict = new JButton("Add Pict");
+        jbAddPict.setBounds(300, 155, 100, 30);
+        
         add(jbAdd2);
+        add(jbAddPict);
         add(jbShowMenu);
         add(jlbFood);
         add(jtfFood);
@@ -94,6 +116,10 @@ public class ManageMenu extends JPanel {
         bgGroup.add(jrbJBFood);
         bgGroup.add(jrbJBBev);
         bgGroup.add(jrbJBCoff);
+    }
+    
+    public static void main(String[] args) {
+        new ManageMenu();
     }
 
     private void setUpAction() {
@@ -111,6 +137,13 @@ public class ManageMenu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 jbShowMenuClick(e);
+            }
+        });
+        
+        jbAddPict.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                jbAddPict();
             }
         });
 
@@ -132,12 +165,34 @@ public class ManageMenu extends JPanel {
             JOptionPane.showMessageDialog(this, "Price can't be zero", "Quantity field", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        //set target file location
+        File target = new File(System.getProperty("user.dir")+"/img",file.getName());
+        
+        try {
+            //copy file
+            Files.copy(file.toPath(), target.toPath(),REPLACE_EXISTING);
+        } catch (Exception ex) {
+//            System.out.println("gambar kososng!!");
+        }
 
-        int result = JOptionPane.showConfirmDialog((Component) null, "Add " + menuName + "\nPrice : " + price + "\nto menu ?", "alert", JOptionPane.OK_CANCEL_OPTION);
+        int result = JOptionPane.showConfirmDialog((Component) null, "Add " + menuName + "\nPrice : " + price 
+                + "\nPicture: " + file.getName() + "\nto menu ?", "alert", JOptionPane.OK_CANCEL_OPTION);
 
         if (result == 0) {
+            tm.setHarga(price);
+            tm.setNama(menuName);
+            tm.setUrl("img\\" + file.getName());
+            if (bgGroup.getSelection().getActionCommand().equals("makanan")) {
+                tm.setTipe("makanan");
+            }else{
+                tm.setTipe("minuman");
+                tm.setKategori(bgGroup.getSelection().getActionCommand());
+            }
             JOptionPane.showMessageDialog(null, "Success");
+            DataAccess.addMenu(tm);
         }
+        
+        
 
     }
 
@@ -145,9 +200,23 @@ public class ManageMenu extends JPanel {
        
 
     }   
+    
+    private void jbAddPict(){
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        this.file = chooser.getSelectedFile();
+        if (!file.getName().contains(".jpg") && !file.getName().contains(".png") && !file.getName().contains(".jpeg")) {
+            JOptionPane.showMessageDialog(null, "File harus berekstensi jpg/jpeg/png.","Warning!!",JOptionPane.WARNING_MESSAGE);
+            this.file = new File("");
+        }
+        System.out.println(file.getName());
+        
+        
+    }
 
     JButton jbAdd2;
     JButton jbShowMenu;
+    JButton jbAddPict;
 
     JTextField jtfFood;
     JTextField jtfPrice;
