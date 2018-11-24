@@ -36,7 +36,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Ronaldo
  */
-public class ManageMenu extends JFrame {
+public class ManageMenu extends JLabel {
     
     private File file = new File("");
     private TblMenu tm = new TblMenu();
@@ -45,7 +45,7 @@ public class ManageMenu extends JFrame {
     public ManageMenu() {
         initComponent();
         setUpAction();
-        setVisible(true);
+//        setVisible(true);
     }
 
     private void initComponent() {
@@ -118,9 +118,9 @@ public class ManageMenu extends JFrame {
         bgGroup.add(jrbJBCoff);
     }
     
-    public static void main(String[] args) {
-        new ManageMenu();
-    }
+//    public static void main(String[] args) {
+//        new ManageMenu();
+//    }
 
     private void setUpAction() {
 
