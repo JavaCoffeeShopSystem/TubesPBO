@@ -5,6 +5,7 @@
  */
 package DatabaseConnection;
 
+import MainProgram.AdminUser;
 import MainProgram.Item;
 import MainProgram.TblBahan;
 import MainProgram.TblMenu;
@@ -21,9 +22,34 @@ import java.util.ArrayList;
  * @author Ronaldo
  */
 public class DataAccess {
+    
+     public static AdminUser login(String uname, String pass){
+        
+       AdminUser a = null;
 
+        String query = "SELECT * FROM emp_gudang WHERE user_name = ? AND pass = ?";
+        try {
+            PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);
+            st.setString(1, uname);
+            st.setString(2, pass);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                a = new AdminUser();
+                a.setUsername(rs.getString("user_name"));
+                a.setPassword(rs.getString("pass"));          
+                break;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return a;
+
+        
+    }
+
+    
     public void addStock(Item itm) {
-
+        
         String query = "INSERT INTO barang (id_barang, nama, jml, satuan, harga) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);

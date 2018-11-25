@@ -9,6 +9,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 /**
  *
@@ -23,6 +24,7 @@ public class Admin extends JFrame {
     }
 
     private void initComponent() {
+        
         ImageIcon img = new ImageIcon("img/admin.png");
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -41,11 +43,4 @@ public class Admin extends JFrame {
         jspPn.setDividerSize(13);
         getContentPane().add(jspPn);
     }
-
-    public static void main(String[] args) {
-
-        new Admin().setVisible(true);
-
-    }
-
 }

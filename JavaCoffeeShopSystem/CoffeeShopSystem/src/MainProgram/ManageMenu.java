@@ -6,23 +6,21 @@
 package MainProgram;
 
 import DatabaseConnection.DataAccess;
-import static MainProgram.ListMenu.m;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -39,7 +37,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -64,15 +61,18 @@ public class ManageMenu extends JLabel {
         setLayout(null);
 
         //Add menu
-        jlbFood = new JLabel("Menu Name");
+        jlbFood = new JLabel("Menu");
+        jlbFood.setForeground(Color.LIGHT_GRAY);
         jlbFood.setBounds(30, 20, 120, 20);
         jlbFood.setFont(new Font("SansSerif", Font.PLAIN, 20));
         add(jlbFood);
+        
         jtfFood = new JTextField();
         jtfFood.setBounds(30, 55, 150, 30);
 
         //Add menu price
-        jlbPrice = new JLabel("Price");
+        jlbPrice = new JLabel("Harga");
+        jlbPrice.setForeground(Color.LIGHT_GRAY);
         jlbPrice.setBounds(30, 90, 100, 20);
         jlbPrice.setFont(new Font("SansSerif", Font.PLAIN, 20));
 
@@ -80,54 +80,61 @@ public class ManageMenu extends JLabel {
         jtfPrice.setBounds(30, 120, 150, 30);
 
         //Selected menu
-        jlbSelect = new JLabel("Select menu");
+        jlbSelect = new JLabel("Jenis");
+        jlbSelect.setForeground(Color.LIGHT_GRAY);
         jlbSelect.setFont(new Font("SansSerif", Font.PLAIN, 15));
         jlbSelect.setBounds(210, 15, 100, 20);
 
         bgGroup = new ButtonGroup();
 
         jrbJBFood = new JRadioButton("Food", true);
+        jrbJBFood.setOpaque(false);
+        jrbJBFood.setForeground(Color.LIGHT_GRAY);
         jrbJBFood.setActionCommand("makanan");
         jrbJBFood.setBounds(210, 45, 100, 20);
 
         jrbJBBev = new JRadioButton("Beverage", true);
+        jrbJBBev.setOpaque(false);
+        jrbJBBev.setForeground(Color.LIGHT_GRAY);
         jrbJBBev.setActionCommand("non-kopi");
         jrbJBBev.setBounds(210, 85, 100, 20);
 
         jrbJBCoff = new JRadioButton("Coffee", true);
+        jrbJBCoff.setOpaque(false);
+        jrbJBCoff.setForeground(Color.LIGHT_GRAY);
         jrbJBCoff.setActionCommand("kopi");
         jrbJBCoff.setBounds(210, 125, 100, 20);
 
         //Add Menu
         jbAdd2 = new JButton("Add");
         jbAdd2.setBounds(30, 155, 70, 30);
+        jbAdd2.setBackground(Color.GRAY);
+        jbAdd2.setForeground(Color.WHITE);
 
         //Show All menu
         jbShowMenu = new JButton("Menu");
         jbShowMenu.setBounds(110, 155, 70, 30);
+        jbShowMenu.setBackground(Color.GRAY);
+        jbShowMenu.setForeground(Color.WHITE);
         
         //ask img
         jbAddPict = new JButton("Add Pict");
         jbAddPict.setBounds(210, 155, 100, 30);
+        jbAddPict.setBackground(Color.GRAY);
+        jbAddPict.setForeground(Color.WHITE);
         
         //add bahan
         jbAddBahan = new JButton("Add Bahan");
         jbAddBahan.setBounds(210,190, 100, 30);
+        jbAddBahan.setBackground(Color.GRAY);
+        jbAddBahan.setForeground(Color.WHITE);
         
-        //btn delete
-        jbDelete = new JButton("Delete");
-        jbDelete.setBounds(500,285,100,30);
+        ImageIcon background = new ImageIcon("img\\background2.jpg");
+        Image img = background.getImage();
+        JLabel back = new JLabel(background);
+        back.setLayout(null);
+        back.setBounds(0, 0, 800, 400);
         
-        //table bahan 
-        jtbBahan = new JTable();
-        DefaultTableModel dt =(DefaultTableModel) jtbBahan.getModel();
-        dt.addColumn("Id");
-        dt.addColumn("Nama");
-        dt.addColumn("Jumlah");
-        jtbBahan.setBounds(350, 23, 400, 250);
-
-        add(jtbBahan);
-        add(jbDelete);
         add(jbAddBahan);
         add(jbAdd2);
         add(jbAddPict);
@@ -140,6 +147,7 @@ public class ManageMenu extends JLabel {
         add(jrbJBBev);
         add(jrbJBCoff);
         add(jlbSelect);
+        add(back);
 
         bgGroup.add(jrbJBFood);
         bgGroup.add(jrbJBBev);
@@ -160,7 +168,7 @@ public class ManageMenu extends JLabel {
         jbShowMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                jbShowMenuClick(e);
+                jbShowMenuClick(e);
             }
         });
         
@@ -183,16 +191,8 @@ public class ManageMenu extends JLabel {
                         bahan.setJml(Integer.parseInt(jtfQua.getText()));
                         bahan.setNamaMenu(tm.getNama());
                         listTblBarang.add(bahan);
-                        addRowTable();
                     }
                 });
-            }
-        });
-        
-        jbDelete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                jbDelete();
             }
         });
 
@@ -206,12 +206,12 @@ public class ManageMenu extends JLabel {
         double price = Double.parseDouble(jtfPrice.getText());
 
         if (menuName.length() == 0) {
-            JOptionPane.showMessageDialog(this, "Menu field must be filled", "Item name field", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Field nama menu tidak boleh kosong!", "Field nama menu", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (price == 0) {
-            JOptionPane.showMessageDialog(this, "Price can't be zero", "Quantity field", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Harga menu tidak boleh 0!", "Harga menu", JOptionPane.WARNING_MESSAGE);
             return;
         }
         //set target file location
@@ -245,17 +245,12 @@ public class ManageMenu extends JLabel {
 
     }
     
-    public void addRowTable(){
-        DefaultTableModel tblModel =(DefaultTableModel) jtbBahan.getModel();
-        System.out.println(listTblBarang.size());
-        Object []ob = new Object[3];
-        ob[0] = listTblBarang.get(listTblBarang.size()-1).getIdBarang();
-        ob[1] = DataAccess.selectBarang(listTblBarang.get(listTblBarang.size()-1).getIdBarang());
-        ob[2] = listTblBarang.get(listTblBarang.size()-1).getJml();
-        tblModel.addRow(ob);
-        
-        
-    }
+    
+
+    private void jbShowMenuClick(ActionEvent e) {
+       
+
+    }   
     
     private void jbAddPict(){
         JFileChooser chooser = new JFileChooser();
@@ -328,21 +323,14 @@ public class ManageMenu extends JLabel {
 
     }
     
-    private void jbDelete(){
-        DefaultTableModel tblModel =(DefaultTableModel) jtbBahan.getModel();
-        int selectecRow = jtbBahan.getSelectedRow();
-        //hapus row yang di tunjuk dari listTblBarang
-        listTblBarang.remove(selectecRow);
-
-        //hapus row yang di tunjuk di table
-        tblModel.removeRow(selectecRow);
+    private void jbAddBahan(){
+        
     }
 
     JButton jbAdd2;
     JButton jbShowMenu;
     JButton jbAddPict;
     JButton jbAddBahan;
-    JButton jbDelete;
 
     JTextField jtfFood;
     JTextField jtfPrice;
@@ -364,6 +352,5 @@ public class ManageMenu extends JLabel {
     JLabel jlbQua;
 
     JTable jtbStock;
-    JTable jtbBahan;
     JScrollPane jscJsc1;
 }
