@@ -200,4 +200,17 @@ public class DataAccess {
         }
 
     }
+    
+    public static String selectBarang(int id){
+        String query = "SELECT nama FROM barang WHERE id_barang = (?)";
+        try{
+            PreparedStatement ps = ConnectionManager.getConnection().prepareStatement(query);     
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getString("nama");
+        }catch (SQLException e){
+            return "tdk ada id!!";
+        }
+    }
 }

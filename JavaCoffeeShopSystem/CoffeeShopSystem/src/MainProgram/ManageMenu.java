@@ -6,6 +6,7 @@
 package MainProgram;
 
 import DatabaseConnection.DataAccess;
+import static MainProgram.ListMenu.m;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -15,7 +16,10 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
@@ -35,6 +39,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -109,8 +114,20 @@ public class ManageMenu extends JLabel {
         jbAddBahan = new JButton("Add Bahan");
         jbAddBahan.setBounds(210,190, 100, 30);
         
+        //btn delete
+        jbDelete = new JButton("Delete");
+        jbDelete.setBounds(500,285,100,30);
         
-        
+        //table bahan 
+        jtbBahan = new JTable();
+        DefaultTableModel dt =(DefaultTableModel) jtbBahan.getModel();
+        dt.addColumn("Id");
+        dt.addColumn("Nama");
+        dt.addColumn("Jumlah");
+        jtbBahan.setBounds(350, 23, 400, 250);
+
+        add(jtbBahan);
+        add(jbDelete);
         add(jbAddBahan);
         add(jbAdd2);
         add(jbAddPict);
@@ -143,7 +160,7 @@ public class ManageMenu extends JLabel {
         jbShowMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jbShowMenuClick(e);
+//                jbShowMenuClick(e);
             }
         });
         
@@ -166,8 +183,16 @@ public class ManageMenu extends JLabel {
                         bahan.setJml(Integer.parseInt(jtfQua.getText()));
                         bahan.setNamaMenu(tm.getNama());
                         listTblBarang.add(bahan);
+                        addRowTable();
                     }
                 });
+            }
+        });
+        
+        jbDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                jbDelete();
             }
         });
 
@@ -220,12 +245,17 @@ public class ManageMenu extends JLabel {
 
     }
     
-    
-
-    private void jbShowMenuClick(ActionEvent e) {
-       
-
-    }   
+    public void addRowTable(){
+        DefaultTableModel tblModel =(DefaultTableModel) jtbBahan.getModel();
+        System.out.println(listTblBarang.size());
+        Object []ob = new Object[3];
+        ob[0] = listTblBarang.get(listTblBarang.size()-1).getIdBarang();
+        ob[1] = DataAccess.selectBarang(listTblBarang.get(listTblBarang.size()-1).getIdBarang());
+        ob[2] = listTblBarang.get(listTblBarang.size()-1).getJml();
+        tblModel.addRow(ob);
+        
+        
+    }
     
     private void jbAddPict(){
         JFileChooser chooser = new JFileChooser();
@@ -298,14 +328,21 @@ public class ManageMenu extends JLabel {
 
     }
     
-    private void jbAddBahan(){
-        
+    private void jbDelete(){
+        DefaultTableModel tblModel =(DefaultTableModel) jtbBahan.getModel();
+        int selectecRow = jtbBahan.getSelectedRow();
+        //hapus row yang di tunjuk dari listTblBarang
+        listTblBarang.remove(selectecRow);
+
+        //hapus row yang di tunjuk di table
+        tblModel.removeRow(selectecRow);
     }
 
     JButton jbAdd2;
     JButton jbShowMenu;
     JButton jbAddPict;
     JButton jbAddBahan;
+    JButton jbDelete;
 
     JTextField jtfFood;
     JTextField jtfPrice;
@@ -327,5 +364,6 @@ public class ManageMenu extends JLabel {
     JLabel jlbQua;
 
     JTable jtbStock;
+    JTable jtbBahan;
     JScrollPane jscJsc1;
 }
