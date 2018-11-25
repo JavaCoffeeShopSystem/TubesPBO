@@ -194,11 +194,17 @@ public class ListMenu extends JPanel{
     }
     
     private void actionBtnOrder(){
+        int total =0 ;
         
         //insert into database
         for (TblPenjualan menu : arr) {
             new DataAccess().addPenjualan(menu);
+            total += (menu.getHarga() * menu.getJml());
         }
+        
+        int kembalian = Integer.parseInt(JOptionPane.showInputDialog(null, "Total: " + total));
+        JOptionPane.showMessageDialog(null, "Kembalian: "+(kembalian-total));
+        
         //clear the array of TblPenjualan
         arr.clear();
         
