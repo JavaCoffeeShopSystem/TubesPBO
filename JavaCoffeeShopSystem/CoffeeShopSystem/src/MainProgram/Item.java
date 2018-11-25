@@ -14,17 +14,17 @@ public class Item {
     private String name;
     private String unit;
     private int id;
-    private int qua;
+    private int qty;
     private int price;
     
     public Item(){
         
     }
     
-    public Item(int id, String name, int qua, String unit, int price) {
+    public Item(int id, String name, int qty, String unit, int price) {
         this.id = id;
         this.name = name;
-        this.qua = qua;
+        this.qty = qty;
         this.unit = unit;
         this.price = price;
         
@@ -63,12 +63,12 @@ public class Item {
         this.unit = unit;
     }
     
-    public int getQua() {
-        return qua;
+    public int getQty() {
+        return qty;
     }
 
-    public void setQua(int qua) {
-        this.qua = qua;
+    public void setQty(int qty) {
+        this.qty = qty;
     }
     
 }

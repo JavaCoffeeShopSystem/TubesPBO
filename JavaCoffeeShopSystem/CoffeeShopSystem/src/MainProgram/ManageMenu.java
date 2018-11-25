@@ -282,7 +282,7 @@ public class ManageMenu extends JLabel {
         for (Item item : listItem) {
             arrObj[i][0] = item.getId();
             arrObj[i][1] = item.getName();
-            arrObj[i][2] = item.getQua();
+            arrObj[i][2] = item.getQty();
             arrObj[i][3] = item.getUnit();
             arrObj[i][4] = item.getPrice();
             i++;

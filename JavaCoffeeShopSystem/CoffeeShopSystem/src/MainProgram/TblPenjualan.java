@@ -10,6 +10,7 @@ package MainProgram;
  * @author Panorama121
  */
 public class TblPenjualan {
+
     private String nama;
     private int id_menu;
     private int harga;
@@ -28,10 +29,11 @@ public class TblPenjualan {
     public String getNama() {
         return nama;
     }
-    
-    public void setNama(String nama){
+
+    public void setNama(String nama) {
         this.nama = nama;
     }
+
     public int getId_menu() {
         return id_menu;
     }
@@ -64,10 +66,4 @@ public class TblPenjualan {
         this.date = date;
     }
 
-    
-
-   
-    
-    
-    
 }

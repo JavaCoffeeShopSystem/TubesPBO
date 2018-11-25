@@ -11,4 +11,6 @@ package MainProgram;
  */
 public class Coffee {
     
+    String name;
+    String Price;
 }

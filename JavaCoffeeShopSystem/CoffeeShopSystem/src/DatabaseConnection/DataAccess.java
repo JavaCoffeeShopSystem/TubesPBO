@@ -29,7 +29,7 @@ public class DataAccess {
             PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);
             st.setInt(1, itm.getId());
             st.setString(2, itm.getName());
-            st.setInt(3, itm.getQua());
+            st.setInt(3, itm.getQty());
             st.setString(4, itm.getUnit());
             st.setInt(5, itm.getPrice());
 
@@ -51,7 +51,7 @@ public class DataAccess {
                 Item i = new Item();
                 i.setId(rs.getInt("id_barang"));
                 i.setName(rs.getString("nama"));
-                i.setQua(rs.getInt("jml"));
+                i.setQty(rs.getInt("jml"));
                 i.setUnit(rs.getString("satuan"));
                 i.setPrice(rs.getInt("harga"));
                 listItem.add(i);
@@ -68,7 +68,7 @@ public class DataAccess {
         String query = "UPDATE barang SET jml = ?, harga = ? WHERE id_barang = ?";
         try {
             PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);
-            st.setInt(1, itm.getQua());
+            st.setInt(1, itm.getQty());
             st.setInt(2, itm.getPrice());
             st.setInt(3, itm.getId());
 
