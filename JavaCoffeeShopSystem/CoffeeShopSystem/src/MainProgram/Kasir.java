@@ -31,8 +31,8 @@ public class Kasir extends JFrame{
         initial();
     }
     
-    public static Color merah = new Color(242,125,132);
-    public static Color biru = new Color(99, 136, 193);
+    public static Color merah = new Color(242,107,114);
+    public static Color biru = new Color(49, 75, 108);
         
     private static ListMenu lm = new ListMenu();
     

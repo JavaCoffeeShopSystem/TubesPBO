@@ -194,7 +194,7 @@ public class ListMenu extends JPanel{
     }
     
     private void actionBtnOrder(){
-        int total =0 ;
+        int total = 0 ;
         
         //insert into database
         for (TblPenjualan menu : arr) {
