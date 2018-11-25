@@ -31,7 +31,7 @@ public class Admin extends JFrame {
         ImageIcon img = new ImageIcon("img/admin.png");
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(700, 400);
+        setSize(800, 400);
         setIconImage(img.getImage());
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.GRAY);
@@ -41,7 +41,7 @@ public class Admin extends JFrame {
         JSplitPane jspPn = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new ManageStock(), new ManageMenu());
         jspPn.setContinuousLayout(true);
         jspPn.setOneTouchExpandable(true);
-        jspPn.setDividerLocation(700);
+        jspPn.setDividerLocation(800);
 
         jspPn.setDividerSize(13);
         getContentPane().add(jspPn);

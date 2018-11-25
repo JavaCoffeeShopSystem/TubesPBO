@@ -22,13 +22,14 @@ public class DataAccess {
 
     public void addStock(Item itm) {
 
-        String query = "INSERT INTO barang (nama, jml, satuan, harga) VALUES (?,?,?,?)";
+        String query = "INSERT INTO barang (id_barang, nama, jml, satuan, harga) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);
-            st.setString(1, itm.getName());
-            st.setInt(2, itm.getQua());
-            st.setString(3, itm.getUnit());
-            st.setInt(4, itm.getPrice());
+            st.setInt(1, itm.getId());
+            st.setString(2, itm.getName());
+            st.setInt(3, itm.getQua());
+            st.setString(4, itm.getUnit());
+            st.setInt(5, itm.getPrice());
 
             st.execute();
         } catch (SQLException e) {
@@ -62,14 +63,12 @@ public class DataAccess {
 
     public static void updateItem(Item itm) {
 
-        String query = "UPDATE barang SET nama = ?, jml = ?, satuan = ?, harga = ? WHERE id_barang = ?";
+        String query = "UPDATE barang SET jml = ?, harga = ? WHERE id_barang = ?";
         try {
             PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);
-            st.setString(1, itm.getName());
-            st.setInt(2, itm.getQua());
-            st.setString(3, itm.getUnit());
-            st.setInt(4, itm.getPrice());
-            st.setInt(5, itm.getId());
+            st.setInt(1, itm.getQua());
+            st.setInt(2, itm.getPrice());
+            st.setInt(3, itm.getId());
 
             st.execute();
         } catch (SQLException e) {
@@ -109,7 +108,7 @@ public class DataAccess {
         }
 
     }
-    
+
     public void addPenjualan(TblPenjualan jual) {
 
         String query = "INSERT INTO penjualan (id_menu, harga, jumlah, tgl) VALUES (?,?,?,?)";
@@ -128,7 +127,7 @@ public class DataAccess {
         }
 
     }
-    
+
     public static void addMenu(TblMenu tm) {
 
         String query = "INSERT INTO menu (nama, harga, url) VALUES (?,?,?)";
@@ -138,20 +137,20 @@ public class DataAccess {
             st.setDouble(2, tm.getHarga());
             st.setString(3, tm.getUrl());
             st.execute();
-            
+
             if (tm.getTipe().equals("makanan")) {
-                String query2 = "INSERT INTO " + tm.getTipe() + " (id_menu) VALUES ((Select id_menu from menu where nama = '"+ tm.getNama() +"'))";
+                String query2 = "INSERT INTO " + tm.getTipe() + " (id_menu) VALUES ((Select id_menu from menu where nama = '" + tm.getNama() + "'))";
                 st = ConnectionManager.getConnection().prepareStatement(query2);
                 st.execute();
             }
-            
+
             if (tm.getTipe().equals("minuman")) {
-                String query2 = "INSERT INTO " + tm.getTipe() + " (id_menu, category) VALUES ((Select id_menu from menu where nama = '"+ tm.getNama() +"'), '" + tm.getKategori() + "')";
+                String query2 = "INSERT INTO " + tm.getTipe() + " (id_menu, category) VALUES ((Select id_menu from menu where nama = '" + tm.getNama() + "'), '" + tm.getKategori() + "')";
                 System.out.println(query2);
                 st = ConnectionManager.getConnection().prepareStatement(query2);
                 st.execute();
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

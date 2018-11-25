@@ -103,7 +103,7 @@ public class ManageStock extends JPanel {
         Image img = background.getImage();
         JLabel back = new JLabel(background);
         back.setLayout(null);
-        back.setBounds(0, 0, 700, 400);
+        back.setBounds(0, 0, 800, 400);
         //Tabel item yang ada dalam stock
         showStock(DataAccess.showStock());
 
@@ -156,7 +156,11 @@ public class ManageStock extends JPanel {
                     JOptionPane.showMessageDialog(null, "Harga item tidak boel 0!", "Input price", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                int result = JOptionPane.showConfirmDialog((Component) null, "Add " + item + "\nQuantity : " + qua + "\nPrice : " + price + "\nstock ?", "After input", JOptionPane.OK_CANCEL_OPTION);
+                int result = JOptionPane.showConfirmDialog((Component) null, "Add "
+                        + "\nNama : " + item
+                        + "\nQuantity : " + qua
+                        + "\nHarga : " + price
+                        + "\nstock ?", "After input", JOptionPane.OK_CANCEL_OPTION);
 
                 if (result == JOptionPane.OK_OPTION) {
                     Item i = new Item(id, item, qua, unit, price);
@@ -164,6 +168,12 @@ public class ManageStock extends JPanel {
                     data.addStock(i);
                     showStock(DataAccess.showStock());
                     JOptionPane.showMessageDialog(null, "Success");
+                    jtfId.setText("0");
+                    jtfItem.setText("");
+                    jtfPrice.setText("0");
+                    jtfQua.setText("0");
+                    jtfUnit.setText("");
+
                 }
 
             }
@@ -185,9 +195,7 @@ public class ManageStock extends JPanel {
                         public void actionPerformed(ActionEvent e) {
                             Item i2 = new Item();
                             i2.setId(id);
-                            i2.setName(jtfItem.getText());
                             i2.setQua(Integer.parseInt(jtfQua.getText()));
-                            i2.setUnit(jtfUnit.getText());
                             i2.setPrice(Integer.parseInt(jtfPrice.getText()));
                             DataAccess.updateItem(i2);
                             showStock(DataAccess.showStock());
@@ -234,7 +242,7 @@ public class ManageStock extends JPanel {
         DefaultTableModel dtm = new DefaultTableModel(arrObj, title);
         jtbStock.setModel(dtm);
         jscJsc1 = new JScrollPane(jtbStock);
-        jscJsc1.setBounds(350, 23, 300, 308);
+        jscJsc1.setBounds(350, 23, 400, 308);
         add(jscJsc1);
 
     }
@@ -244,53 +252,41 @@ public class ManageStock extends JPanel {
         JDialog jd = new JDialog();
         jd.setLayout(null);
         jd.setLocationRelativeTo(null);
-        jd.setSize(500, 300);
-
-        jlbItem = new JLabel("Item");
-        jlbItem.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        jlbItem.setBounds(8, 20, 100, 35);
-
-        jtfItem = new JTextField();
-        jtfItem.setBounds(110, 22, 200, 30);
+        jd.setSize(400, 250);
 
         //Input kuantitas item 
         jlbQua = new JLabel("Kuantitas");
         jlbQua.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        jlbQua.setBounds(8, 35, 100, 75);
+        jlbQua.setBounds(8, 7, 100, 75);
 
         jtfQua = new JTextField("0");
-        jtfQua.setBounds(110, 61, 100, 30);
-
-        //Input satuan item
-        jlbUnit = new JLabel("Satuan");
-        jlbUnit.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        jlbUnit.setBounds(8, 76, 100, 75);
-
-        jtfUnit = new JTextField();
-        jtfUnit.setBounds(110, 100, 100, 30);
+        jtfQua.setBounds(110, 30, 100, 30);
 
         //Input harga item
         jlbPrice = new JLabel("Harga");
         jlbPrice.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        jlbPrice.setBounds(8, 117, 100, 75);
+        jlbPrice.setBounds(8, 53, 100, 75);
 
         jtfPrice = new JTextField("0");
-        jtfPrice.setBounds(110, 140, 100, 30);
+        jtfPrice.setBounds(110, 79, 100, 30);
 
         //Button update stock
         jbUpdate2 = new JButton("Update");
-        jbUpdate2.setBounds(110, 200, 200, 30);
+        jbUpdate2.setBounds(110, 130, 200, 40);
         jbUpdate2.setBackground(Color.LIGHT_GRAY);
 
-        jd.add(jlbItem);
-        jd.add(jtfItem);
+        ImageIcon background = new ImageIcon("img\\background.jpg");
+        Image img = background.getImage();
+        JLabel lblBack = new JLabel(background);
+        lblBack.setLayout(null);
+        lblBack.setBounds(0, 0, 800, 400);
+
         jd.add(jlbQua);
         jd.add(jtfQua);
-        jd.add(jlbUnit);
-        jd.add(jtfUnit);
         jd.add(jlbPrice);
         jd.add(jtfPrice);
         jd.add(jbUpdate2);
+        jd.add(lblBack);
 
         jd.setVisible(true);
     }
