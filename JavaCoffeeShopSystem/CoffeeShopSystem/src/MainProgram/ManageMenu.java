@@ -15,9 +15,13 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -41,7 +45,8 @@ public class ManageMenu extends JLabel {
     private File file = new File("");
     private TblMenu tm = new TblMenu();
     private ButtonGroup bgGroup;
-
+    private List<TblBahan> listTblBarang = new ArrayList<>();
+    
     public ManageMenu() {
         initComponent();
         setUpAction();
@@ -55,7 +60,7 @@ public class ManageMenu extends JLabel {
 
         //Add menu
         jlbFood = new JLabel("Menu Name");
-        jlbFood.setBounds(120, 20, 120, 20);
+        jlbFood.setBounds(10, 20, 120, 20);
         jlbFood.setFont(new Font("SansSerif", Font.PLAIN, 20));
         add(jlbFood);
         jtfFood = new JTextField();
@@ -96,11 +101,17 @@ public class ManageMenu extends JLabel {
         jbShowMenu = new JButton("Menu");
         jbShowMenu.setBounds(200, 155, 70, 30);
         
-        
         //ask img
         jbAddPict = new JButton("Add Pict");
         jbAddPict.setBounds(300, 155, 100, 30);
         
+        //add bahan
+        jbAddBahan = new JButton("Add Bahan");
+        jbAddBahan.setBounds(300,190, 100, 30);
+        
+        
+        
+        add(jbAddBahan);
         add(jbAdd2);
         add(jbAddPict);
         add(jbShowMenu);
@@ -118,10 +129,6 @@ public class ManageMenu extends JLabel {
         bgGroup.add(jrbJBCoff);
     }
     
-//    public static void main(String[] args) {
-//        new ManageMenu();
-//    }
-
     private void setUpAction() {
 
         //Add Menu
@@ -144,6 +151,23 @@ public class ManageMenu extends JLabel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 jbAddPict();
+            }
+        });
+        
+        jbAddBahan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                tambahBahan();
+                jbUpdate2.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        TblBahan bahan = new TblBahan();
+                        bahan.setIdBarang(Integer.parseInt(jtfItem.getText()));
+                        bahan.setJml(Integer.parseInt(jtfQua.getText()));
+                        bahan.setNamaMenu(tm.getNama());
+                        listTblBarang.add(bahan);
+                    }
+                });
             }
         });
 
@@ -189,12 +213,14 @@ public class ManageMenu extends JLabel {
                 tm.setKategori(bgGroup.getSelection().getActionCommand());
             }
             JOptionPane.showMessageDialog(null, "Success");
-            DataAccess.addMenu(tm);
+            DataAccess.addMenu(tm,listTblBarang);
         }
         
         
 
     }
+    
+    
 
     private void jbShowMenuClick(ActionEvent e) {
        
@@ -210,13 +236,76 @@ public class ManageMenu extends JLabel {
             this.file = new File("");
         }
         System.out.println(file.getName());
+    }
+    
+    private void tambahBahan() {
+
+        JDialog jd = new JDialog();
+        jd.setLayout(null);
+        jd.setLocationRelativeTo(null);
+        jd.setSize(600, 300);
+
+        jlbItem = new JLabel("Item Id");
+        jlbItem.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        jlbItem.setBounds(8, 20, 100, 35);
+
+        jtfItem = new JTextField();
+        jtfItem.setBounds(110, 22, 100, 30);
+
+        //Input kuantitas item 
+        jlbQua = new JLabel("Kuantitas");
+        jlbQua.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        jlbQua.setBounds(8, 35, 100, 75);
+
+        jtfQua = new JTextField("0");
+        jtfQua.setBounds(110, 61, 100, 30);
         
+        //Button update stock
+        jbUpdate2 = new JButton("Add");
+        jbUpdate2.setBounds(110, 150, 100, 30);
+        jbUpdate2.setBackground(Color.LIGHT_GRAY);
+
+        jd.add(jlbItem);
+        jd.add(jtfItem);
+        jd.add(jlbQua);
+        jd.add(jtfQua);
+        jd.add(jbUpdate2);
+        jd.add(showStock((DataAccess.showStock())));
+        jd.setVisible(true);
+    }
+
+    private JComponent showStock(List<Item> listItem) {
+        String[] title = {"id", "Item", "Qua", "Unit", "Price"};
+        Object[][] arrObj = new Object[listItem.size()][5];
+
+        int i = 0;
+        for (Item item : listItem) {
+            arrObj[i][0] = item.getId();
+            arrObj[i][1] = item.getName();
+            arrObj[i][2] = item.getQua();
+            arrObj[i][3] = item.getUnit();
+            arrObj[i][4] = item.getPrice();
+            i++;
+        }
+
+        jtbStock = new JTable();
+        DefaultTableModel dtm = new DefaultTableModel(arrObj, title);
+        jtbStock.setModel(dtm);
+        jscJsc1 = new JScrollPane(jtbStock);
+        jscJsc1.setBounds(230, 23, 300, 200);
+        
+        return jscJsc1;
+
+    }
+    
+    private void jbAddBahan(){
         
     }
 
     JButton jbAdd2;
     JButton jbShowMenu;
     JButton jbAddPict;
+    JButton jbAddBahan;
 
     JTextField jtfFood;
     JTextField jtfPrice;
@@ -228,4 +317,15 @@ public class ManageMenu extends JLabel {
     JRadioButton jrbJBFood;
     JRadioButton jrbJBBev;
     JRadioButton jrbJBCoff;
+    
+    JButton jbUpdate2;
+
+    JTextField jtfItem;
+    JTextField jtfQua;
+
+    JLabel jlbItem;
+    JLabel jlbQua;
+
+    JTable jtbStock;
+    JScrollPane jscJsc1;
 }
