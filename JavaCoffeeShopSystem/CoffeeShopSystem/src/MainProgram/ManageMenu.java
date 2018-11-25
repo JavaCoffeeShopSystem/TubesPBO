@@ -60,54 +60,54 @@ public class ManageMenu extends JLabel {
 
         //Add menu
         jlbFood = new JLabel("Menu Name");
-        jlbFood.setBounds(10, 20, 120, 20);
+        jlbFood.setBounds(30, 20, 120, 20);
         jlbFood.setFont(new Font("SansSerif", Font.PLAIN, 20));
         add(jlbFood);
         jtfFood = new JTextField();
-        jtfFood.setBounds(120, 55, 150, 30);
+        jtfFood.setBounds(30, 55, 150, 30);
 
         //Add menu price
         jlbPrice = new JLabel("Price");
-        jlbPrice.setBounds(120, 90, 100, 20);
+        jlbPrice.setBounds(30, 90, 100, 20);
         jlbPrice.setFont(new Font("SansSerif", Font.PLAIN, 20));
 
         jtfPrice = new JTextField("0");
-        jtfPrice.setBounds(120, 120, 150, 30);
+        jtfPrice.setBounds(30, 120, 150, 30);
 
         //Selected menu
         jlbSelect = new JLabel("Select menu");
         jlbSelect.setFont(new Font("SansSerif", Font.PLAIN, 15));
-        jlbSelect.setBounds(300, 15, 100, 20);
+        jlbSelect.setBounds(210, 15, 100, 20);
 
         bgGroup = new ButtonGroup();
 
         jrbJBFood = new JRadioButton("Food", true);
         jrbJBFood.setActionCommand("makanan");
-        jrbJBFood.setBounds(300, 45, 100, 20);
+        jrbJBFood.setBounds(210, 45, 100, 20);
 
         jrbJBBev = new JRadioButton("Beverage", true);
         jrbJBBev.setActionCommand("non-kopi");
-        jrbJBBev.setBounds(300, 85, 100, 20);
+        jrbJBBev.setBounds(210, 85, 100, 20);
 
         jrbJBCoff = new JRadioButton("Coffee", true);
         jrbJBCoff.setActionCommand("kopi");
-        jrbJBCoff.setBounds(300, 125, 100, 20);
+        jrbJBCoff.setBounds(210, 125, 100, 20);
 
         //Add Menu
         jbAdd2 = new JButton("Add");
-        jbAdd2.setBounds(120, 155, 70, 30);
+        jbAdd2.setBounds(30, 155, 70, 30);
 
         //Show All menu
         jbShowMenu = new JButton("Menu");
-        jbShowMenu.setBounds(200, 155, 70, 30);
+        jbShowMenu.setBounds(110, 155, 70, 30);
         
         //ask img
         jbAddPict = new JButton("Add Pict");
-        jbAddPict.setBounds(300, 155, 100, 30);
+        jbAddPict.setBounds(210, 155, 100, 30);
         
         //add bahan
         jbAddBahan = new JButton("Add Bahan");
-        jbAddBahan.setBounds(300,190, 100, 30);
+        jbAddBahan.setBounds(210,190, 100, 30);
         
         
         
