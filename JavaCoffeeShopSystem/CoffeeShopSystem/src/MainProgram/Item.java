@@ -21,7 +21,8 @@ public class Item {
         
     }
     
-    public Item(String name, int qua, String unit, int price) {
+    public Item(int id, String name, int qua, String unit, int price) {
+        this.id = id;
         this.name = name;
         this.qua = qua;
         this.unit = unit;
@@ -70,9 +71,4 @@ public class Item {
         this.qua = qua;
     }
     
-    @Override
-    public String toString() {
-        return name + " " + price +" " + unit + " " + qua;
-    }
-
 }

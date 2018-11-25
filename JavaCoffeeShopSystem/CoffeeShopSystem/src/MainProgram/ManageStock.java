@@ -9,10 +9,12 @@ import DatabaseConnection.DataAccess;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -41,6 +43,14 @@ public class ManageStock extends JPanel {
     private void initComponent() {
         this.setLayout(null);
 
+        //Input id item 
+        jlbId = new JLabel("Id");
+        jlbId.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        jlbId.setBounds(220, 37, 100, 75);
+
+        jtfId = new JTextField("0");
+        jtfId.setBounds(253, 61, 56, 30);
+
         //Input nama item
         jlbItem = new JLabel("Item");
         jlbItem.setFont(new Font("SansSerif", Font.PLAIN, 20));
@@ -52,7 +62,7 @@ public class ManageStock extends JPanel {
         //Input kuantitas item 
         jlbQua = new JLabel("Kuantitas");
         jlbQua.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        jlbQua.setBounds(8, 35, 100, 75);
+        jlbQua.setBounds(8, 37, 100, 75);
 
         jtfQua = new JTextField("0");
         jtfQua.setBounds(110, 61, 100, 30);
@@ -75,25 +85,25 @@ public class ManageStock extends JPanel {
 
         //Button add item ke database
         jbAdd = new JButton("Add");
-        jbAdd.setBounds(110, 180, 200, 30);
+        jbAdd.setBounds(110, 180, 200, 45);
         jbAdd.setBackground(Color.DARK_GRAY);
         jbAdd.setForeground(Color.WHITE);
 
-        //Button untuk refresh list item
-        jbStock = new JButton("Refresh Stock");
-        jbStock.setBounds(110, 220, 200, 30);
-        jbStock.setBackground(Color.LIGHT_GRAY);
-
         //Button update stock
         jbUpdate = new JButton("Update");
-        jbUpdate.setBounds(110, 260, 200, 30);
+        jbUpdate.setBounds(110, 230, 200, 45);
         jbUpdate.setBackground(Color.LIGHT_GRAY);
 
         //Button hapus item di stock
         jbDelete = new JButton("Delete");
-        jbDelete.setBounds(110, 300, 200, 30);
+        jbDelete.setBounds(110, 280, 200, 45);
         jbDelete.setBackground(Color.LIGHT_GRAY);
 
+        ImageIcon background = new ImageIcon("img\\background.jpg");
+        Image img = background.getImage();
+        JLabel back = new JLabel(background);
+        back.setLayout(null);
+        back.setBounds(0, 0, 700, 400);
         //Tabel item yang ada dalam stock
         showStock(DataAccess.showStock());
 
@@ -101,14 +111,16 @@ public class ManageStock extends JPanel {
         add(jtfItem);
         add(jlbQua);
         add(jtfQua);
+        add(jtfId);
+        add(jlbId);
         add(jlbUnit);
         add(jtfUnit);
         add(jlbPrice);
         add(jtfPrice);
         add(jbAdd);
-        add(jbStock);
         add(jbUpdate);
         add(jbDelete);
+        add(back);
     }
 
     private void setUpAction() {
@@ -117,15 +129,43 @@ public class ManageStock extends JPanel {
         jbAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jbAddClick(e);
-            }
-        });
 
-        //Refresh stock
-        jbStock.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jbStockClick(e);
+                int id = Integer.parseInt(jtfId.getText());
+                String item = jtfItem.getText();
+                String unit = jtfUnit.getText();
+                int qua = Integer.parseInt(jtfQua.getText());
+                int price = Integer.parseInt(jtfPrice.getText());
+
+                if (id == 0) {
+                    JOptionPane.showMessageDialog(null, "Id tidak boleh 0!", "Input id item", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                if (item.length() == 0) {
+                    JOptionPane.showMessageDialog(null, "Field nama item harus terisi!", "Input nama item", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                if (qua == 0) {
+                    JOptionPane.showMessageDialog(null, "Quantity item tidak boleh 0!", "Input quantity item", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                if (unit.length() == 0) {
+                    JOptionPane.showMessageDialog(null, "Field satuan item harus terisi!", "Input satuan item", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                if (price == 0) {
+                    JOptionPane.showMessageDialog(null, "Harga item tidak boel 0!", "Input price", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                int result = JOptionPane.showConfirmDialog((Component) null, "Add " + item + "\nQuantity : " + qua + "\nPrice : " + price + "\nstock ?", "After input", JOptionPane.OK_CANCEL_OPTION);
+
+                if (result == JOptionPane.OK_OPTION) {
+                    Item i = new Item(id, item, qua, unit, price);
+                    DataAccess data = new DataAccess();
+                    data.addStock(i);
+                    showStock(DataAccess.showStock());
+                    JOptionPane.showMessageDialog(null, "Success");
+                }
+
             }
         });
 
@@ -163,51 +203,17 @@ public class ManageStock extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Input Id : "));
-                DataAccess.deleteItem(id);
-                showStock(DataAccess.showStock());
-                JOptionPane.showMessageDialog(null, "Table stok berhasil diperbaharui");
+                Item i = DataAccess.searchItem(id);
+
+                if (i == null) {
+                    JOptionPane.showMessageDialog(null, "Barang tidak ditemukan!");
+                } else {
+                    DataAccess.deleteItem(id);
+                    showStock(DataAccess.showStock());
+                    JOptionPane.showMessageDialog(null, "Table stok berhasil diperbaharui");
+                }
             }
         });
-    }
-
-    private void jbAddClick(ActionEvent e) {
-
-        String item = jtfItem.getText();
-        String unit = jtfUnit.getText();
-        int qua = Integer.parseInt(jtfQua.getText());
-        int price = Integer.parseInt(jtfPrice.getText());
-
-        if (item.length() == 0) {
-            JOptionPane.showMessageDialog(this, "Item name field must be filled", "Input item name", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        if (qua == 0 || jtfQua.getText().equals(null)) {
-            JOptionPane.showMessageDialog(this, "Quantity can't be zero", "Input quantity", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        if (unit.length() == 0) {
-            JOptionPane.showMessageDialog(this, "Unit field must be filled", "Input unit", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        if (price == 0 || jtfPrice.getText().equals(null)) {
-            JOptionPane.showMessageDialog(this, "Price can't be zero", "Input price", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        int result = JOptionPane.showConfirmDialog((Component) null, "Add " + item + "\nQuantity : " + qua + "\nPrice : " + price + "\nstock ?", "After input", JOptionPane.OK_CANCEL_OPTION);
-
-        if (result == JOptionPane.OK_OPTION) {
-            Item i = new Item(item, qua, unit, price);
-            DataAccess data = new DataAccess();
-            data.addStock(i);
-
-            JOptionPane.showMessageDialog(null, "Success");
-        }
-
-    }
-
-    //Akses stock dengan isi baru
-    private void jbStockClick(ActionEvent e) {
-        showStock(DataAccess.showStock());
     }
 
     private void showStock(List<Item> listItem) {
@@ -290,16 +296,17 @@ public class ManageStock extends JPanel {
     }
 
     JButton jbAdd;
-    JButton jbStock;
     JButton jbUpdate;
     JButton jbUpdate2;
     JButton jbDelete;
 
+    JTextField jtfId;
     JTextField jtfItem;
     JTextField jtfQua;
     JTextField jtfUnit;
     JTextField jtfPrice;
 
+    JLabel jlbId;
     JLabel jlbItem;
     JLabel jlbQua;
     JLabel jlbUnit;

@@ -27,17 +27,6 @@ public class Admin extends JFrame {
         initComponent();
     }
 
-    private Image resizeImage(int x, int y, String url) {
-        Image dimg = null;
-        try {
-            BufferedImage img = ImageIO.read(new File(url));
-            dimg = img.getScaledInstance(x, y, Image.SCALE_SMOOTH);
-        } catch (IOException ex) {
-            ex.printStackTrace(System.err);
-        }
-        return dimg;
-    }
-
     private void initComponent() {
         ImageIcon img = new ImageIcon("img/admin.png");
 
