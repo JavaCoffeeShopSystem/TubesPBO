@@ -188,7 +188,7 @@ public class ManageMenu extends JLabel {
                     public void actionPerformed(ActionEvent e) {
                         TblBahan bahan = new TblBahan();
                         bahan.setIdBarang(Integer.parseInt(jtfItem.getText()));
-                        bahan.setJml(Integer.parseInt(jtfQua.getText()));
+                        bahan.setJml(Integer.parseInt(jtfQty.getText()));
                         bahan.setNamaMenu(tm.getNama());
                         listTblBarang.add(bahan);
                     }
@@ -278,12 +278,12 @@ public class ManageMenu extends JLabel {
         jtfItem.setBounds(110, 22, 100, 30);
 
         //Input kuantitas item 
-        jlbQua = new JLabel("Kuantitas");
-        jlbQua.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        jlbQua.setBounds(8, 35, 100, 75);
+        jlbQty = new JLabel("Kuantitas");
+        jlbQty.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        jlbQty.setBounds(8, 35, 100, 75);
 
-        jtfQua = new JTextField("0");
-        jtfQua.setBounds(110, 61, 100, 30);
+        jtfQty = new JTextField("0");
+        jtfQty.setBounds(110, 61, 100, 30);
         
         //Button update stock
         jbUpdate2 = new JButton("Add");
@@ -292,8 +292,8 @@ public class ManageMenu extends JLabel {
 
         jd.add(jlbItem);
         jd.add(jtfItem);
-        jd.add(jlbQua);
-        jd.add(jtfQua);
+        jd.add(jlbQty);
+        jd.add(jtfQty);
         jd.add(jbUpdate2);
         jd.add(showStock((DataAccess.showStock())));
         jd.setVisible(true);
@@ -346,10 +346,10 @@ public class ManageMenu extends JLabel {
     JButton jbUpdate2;
 
     JTextField jtfItem;
-    JTextField jtfQua;
+    JTextField jtfQty;
 
     JLabel jlbItem;
-    JLabel jlbQua;
+    JLabel jlbQty;
 
     JTable jtbStock;
     JScrollPane jscJsc1;
