@@ -45,7 +45,7 @@ public class ManageStock extends JPanel {
 
         //Input id item 
         jlbId = new JLabel("Id");
-        jlbId.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        jlbId.setFont(new Font("SansSerif", Font.CENTER_BASELINE, 17));
         jlbId.setBounds(220, 37, 100, 75);
 
         jtfId = new JTextField("0");
@@ -53,7 +53,7 @@ public class ManageStock extends JPanel {
 
         //Input nama item
         jlbItem = new JLabel("Item");
-        jlbItem.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        jlbItem.setFont(new Font("SansSerif", Font.PLAIN, 17));
         jlbItem.setBounds(8, 20, 100, 35);
 
         jtfItem = new JTextField();
