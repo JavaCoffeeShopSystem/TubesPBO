@@ -129,12 +129,28 @@ public class ManageMenu extends JLabel {
         jbAddBahan.setBackground(Color.GRAY);
         jbAddBahan.setForeground(Color.WHITE);
         
+         //btn delete
+        jbDelete = new JButton("Delete");
+        jbDelete.setBounds(500,285,100,30);
+        
+        //table bahan 
+        jtbBahan = new JTable();
+        DefaultTableModel dt =(DefaultTableModel) jtbBahan.getModel();
+        dt.addColumn("Id");
+        dt.addColumn("Nama");
+        dt.addColumn("Jumlah");
+        jtbBahan.setBounds(350, 23, 400, 250);
+
+       
+        
         ImageIcon background = new ImageIcon("img\\background2.jpg");
         Image img = background.getImage();
         JLabel back = new JLabel(background);
         back.setLayout(null);
         back.setBounds(0, 0, 800, 400);
         
+        add(jtbBahan);
+        add(jbDelete);
         add(jbAddBahan);
         add(jbAdd2);
         add(jbAddPict);
@@ -183,8 +199,16 @@ public class ManageMenu extends JLabel {
                         bahan.setJml(Integer.parseInt(jtfQty.getText()));
                         bahan.setNamaMenu(tm.getNama());
                         listTblBarang.add(bahan);
+                        addRowTable();
                     }
                 });
+            }
+        });
+        
+        jbDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                jbDelete();
             }
         });
 
@@ -237,6 +261,17 @@ public class ManageMenu extends JLabel {
 
     }
     
+    public void addRowTable(){
+        DefaultTableModel tblModel =(DefaultTableModel) jtbBahan.getModel();
+        System.out.println(listTblBarang.size());
+        Object []ob = new Object[3];
+        ob[0] = listTblBarang.get(listTblBarang.size()-1).getIdBarang();
+        ob[1] = DataAccess.selectBarang(listTblBarang.get(listTblBarang.size()-1).getIdBarang());
+        ob[2] = listTblBarang.get(listTblBarang.size()-1).getJml();
+        tblModel.addRow(ob);
+        
+        
+    }
     
     private void jbAddPict(){
         JFileChooser chooser = new JFileChooser();
@@ -308,8 +343,19 @@ public class ManageMenu extends JLabel {
         return jscJsc1;
 
     }
-   
+    
+     private void jbDelete(){
+        DefaultTableModel tblModel =(DefaultTableModel) jtbBahan.getModel();
+        int selectecRow = jtbBahan.getSelectedRow();
+        //hapus row yang di tunjuk dari listTblBarang
+        listTblBarang.remove(selectecRow);
 
+        //hapus row yang di tunjuk di table
+        tblModel.removeRow(selectecRow);
+    }
+   
+    JButton jbDelete;
+    JTable jtbBahan;
     JButton jbAdd2;
     JButton jbShowMenu;
     JButton jbAddPict;
