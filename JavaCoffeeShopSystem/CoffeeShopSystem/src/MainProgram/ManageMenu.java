@@ -163,14 +163,6 @@ public class ManageMenu extends JLabel {
                 jbAdd2Click(e);
             }
         });
-
-        //See sMenu
-        jbShowMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jbShowMenuClick(e);
-            }
-        });
         
         jbAddPict.addActionListener(new ActionListener() {
             @Override
@@ -246,12 +238,6 @@ public class ManageMenu extends JLabel {
     }
     
     
-
-    private void jbShowMenuClick(ActionEvent e) {
-       
-
-    }   
-    
     private void jbAddPict(){
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
@@ -322,10 +308,7 @@ public class ManageMenu extends JLabel {
         return jscJsc1;
 
     }
-    
-    private void jbAddBahan(){
-        
-    }
+   
 
     JButton jbAdd2;
     JButton jbShowMenu;
