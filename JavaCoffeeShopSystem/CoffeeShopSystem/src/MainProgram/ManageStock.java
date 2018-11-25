@@ -48,7 +48,7 @@ public class ManageStock extends JPanel {
         jlbId.setFont(new Font("SansSerif", Font.PLAIN, 19));
         jlbId.setForeground(Color.LIGHT_GRAY);
         jlbId.setBounds(225, 37, 100, 75);
-        
+
         jtfId = new JTextField("0");
         jtfId.setBounds(253, 61, 56, 30);
 
@@ -203,7 +203,7 @@ public class ManageStock extends JPanel {
                             Item i2 = new Item();
                             i2.setId(id);
                             i2.setQty(Integer.parseInt(jtfQua.getText()));
-                            i2.setPrice(Integer.parseInt(jtfPrice.getText()));
+                            i2.setUnit(jtfUnit.getText());
                             DataAccess.updateItem(i2);
                             showStock(DataAccess.showStock());
                             JOptionPane.showMessageDialog(null, "Tabel telah diperbaharui");
@@ -271,21 +271,20 @@ public class ManageStock extends JPanel {
         jtfQua = new JTextField("0");
         jtfQua.setBounds(110, 30, 100, 30);
 
-        //Input harga item
-        jlbPrice = new JLabel("Harga");
-        jlbPrice.setForeground(Color.LIGHT_GRAY);
-        jlbPrice.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        jlbPrice.setBounds(8, 53, 100, 75);
+        jlbUnit = new JLabel("Satuan");
+        jlbUnit.setFont(new Font("SansSerif", Font.PLAIN, 19));
+        jlbUnit.setForeground(Color.LIGHT_GRAY);
+        jlbUnit.setBounds(8, 53, 100, 75);
 
-        jtfPrice = new JTextField("0");
-        jtfPrice.setBounds(110, 79, 100, 30);
+        jtfUnit = new JTextField();
+        jtfUnit.setBounds(110, 79, 100, 30);
 
         //Button update stock
         jbUpdate2 = new JButton("Update");
         jbUpdate2.setBounds(110, 130, 200, 40);
         jbUpdate2.setBackground(Color.GRAY);
         jbUpdate2.setForeground(Color.WHITE);
-        
+
         ImageIcon background = new ImageIcon("img\\login.jpg");
         Image img = background.getImage();
         JLabel lblBack = new JLabel(background);
@@ -294,14 +293,14 @@ public class ManageStock extends JPanel {
 
         jdUpdate.add(jlbQua);
         jdUpdate.add(jtfQua);
-        jdUpdate.add(jlbPrice);
-        jdUpdate.add(jtfPrice);
+        jdUpdate.add(jlbUnit);
+        jdUpdate.add(jtfUnit);
         jdUpdate.add(jbUpdate2);
         jdUpdate.add(lblBack);
 
         jdUpdate.setVisible(true);
     }
-    
+
     JButton jbAdd;
     JButton jbUpdate;
     JButton jbUpdate2;

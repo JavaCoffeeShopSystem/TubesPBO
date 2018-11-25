@@ -43,8 +43,6 @@ public class DataAccess {
             e.printStackTrace();
         }
         return a;
-
-        
     }
 
     
@@ -91,11 +89,11 @@ public class DataAccess {
 
     public static void updateItem(Item itm) {
 
-        String query = "UPDATE barang SET jml = ?, harga = ? WHERE id_barang = ?";
+        String query = "UPDATE barang SET jml = ?, satuan = ? WHERE id_barang = ?";
         try {
             PreparedStatement st = ConnectionManager.getConnection().prepareStatement(query);
             st.setInt(1, itm.getQty());
-            st.setInt(2, itm.getPrice());
+            st.setString(2, itm.getUnit());
             st.setInt(3, itm.getId());
 
             st.execute();
